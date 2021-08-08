@@ -2,7 +2,7 @@
 % Please edit documentation in R/AdjSurv.fn.R
 \name{AdjSurv.fn}
 \alias{AdjSurv.fn}
-\title{Title}
+\title{Active Tag-Life-Adjusted Survival Modeling Fitting}
 \usage{
 AdjSurv.fn(
   taglife.file = NULL,
@@ -46,15 +46,8 @@ if taglife file provided:
 "tagfile": name of tag-life file used
 "taglife.model"
 "$modelout": name of model used to estimate tag-life failure curve
-"$lik.out": likelihood of model fit ############################ CURRENTLY NOT WORKING
-"$params: estimated parameters of tag-life failure curve
-"$meantime2fail:  harmonic mean and standard error of time to failure after tag-activation
-"mean.tag.pLive"
-"$L":  vector of P(li) -- average probability tag is active when detected at each detection site
-"$L.se": bootstrapped standard error on p(Li)
-"adjusted.cjs"
-"$cjs.param": 2-column matrix of adjusted CJS Si and lamba parameters and standard errors given expected tag-life
+"$lik.out": likelihood of model fit'
 }
 \description{
-Title
+Active Tag-Life-Adjusted Survival Modeling Fitting
 }
