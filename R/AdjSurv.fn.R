@@ -1,5 +1,5 @@
 
-#' Title
+#' @title Active Tag-Life-Adjusted Survival Modeling Fitting
 #'
 #' @param taglife.file Optional. Name of .csv file with taglife times in 1st column.  other columns ignored.  Header expected.
 #' @param taghist.file  Required. Name of .csv with detection histories. 2 formats currently supported.
@@ -23,52 +23,11 @@
 #' 	"tagfile": name of tag-life file used
 #' 	"taglife.model"
 #' 	"$modelout": name of model used to estimate tag-life failure curve
-#' 	"$lik.out": likelihood of model fit ############################ CURRENTLY NOT WORKING
-#' 	"$params: estimated parameters of tag-life failure curve
-#' 	"$meantime2fail:  harmonic mean and standard error of time to failure after tag-activation
-#' 	"mean.tag.pLive"
-#' 	"$L":  vector of P(li) -- average probability tag is active when detected at each detection site
-#' 	"$L.se": bootstrapped standard error on p(Li)
-#' 	"adjusted.cjs"
-#' 	"$cjs.param": 2-column matrix of adjusted CJS Si and lamba parameters and standard errors given expected tag-life
-#'
+#' 	"$lik.out": likelihood of model fit'
 #' @export
 #'
 AdjSurv.fn=function (taglife.file=NULL, taghist.file,taghist.format="atlas", taglife.model="weibull3", num.release=1,
                      num.bootstrap = 1000, adjust.cjs = T, rounding = 4, plot.taglife = T) {
-  # function to estimate CJS from detection histories with or without adjustments for active taglife or censoring at detection sites
-  # INPUT
-  # taglife.file: [OPT] name of .csv file with taglife times in 1st column.  other columns ignored.  Header expected.
-  # taghist.file: [REQ] name of .csv with detection histories. 2 formats currently supported
-  # taghist.format: ("atlas"/"flat") format of tag detection histories
-  # 	"atlas" = format based on Program ATLAS input files. 8 columns.  Each tag has 1 line per possible detection site
-  # 	"flat" = format has 1 line per tag. tag.code, activation date, release date, and
-  #           1 column per detection site filled with 1st detection times at that site (current format: "%m/%d/%Y %H:%M")
-  # num.release: (num) if more than 1 release group 1st column will be added to flat format file that will denote group name
-  # num.bootstrap = (num) number of resamples to estimate additional variance on survival estimates, default is 1000
-  # adjust.cjs: (T/F) should CJS estimates be adjusted for estimated tag-life?
-  # rounding: (num) number of decimal places on estimates
-  # plot.taglife: (T/F) plot the estimated tag-life curve?
-  # OUTPUT
-  # out: list
-  #	"taghist": name of the tag history file used
-  #	"unadjusted.cjs"
-  #		"$cjs.param": 2-column matrix with CJS estimates and standard errors
-  #		"$d": vector of probability of censoring, given detection, at each detection site
-  #	if taglife file provided:
-  #	"tagfile": name of tag-life file used
-  # 	"taglife.model"
-  #		"$modelout": name of model used to estimate tag-life failure curve
-  #		"$lik.out": likelihood of model fit ############################ CURRENTLY NOT WORKING
-  # 		"$params: estimated parameters of tag-life failure curve
-  #		"$meantime2fail:  harmonic mean and standard error of time to failure after tag-activation
-  #	"mean.tag.pLive"
-  #		"$L":  vector of P(li) -- average probability tag is active when detected at each detection site
-  #		"$L.se": bootstrapped standard error on p(Li)
-  # 	"adjusted.cjs"
-  #		"$cjs.param": 2-column matrix of adjusted CJS Si and lamba parameters and standard errors given expected tag-life
-
-
   data.file = data.frame(read.csv(taghist.file, header = F, colClasses = c("character")))
   if(!is.null(taglife.file)){
     tag.life = read.csv(taglife.file, header = T)
