@@ -7,23 +7,14 @@
 #' "atlas" = format based on Program ATLAS input files. 8 columns.  Each tag has 1 line per possible detection site
 #' 	"flat" = format has 1 line per tag. tag.code, activation date, release date, and
 #' 	          1 column per detection site filled with 1st detection times at that site (current format: "%m/%d/%Y %H:%M")
-#' @param taglife.model
+#' @param taglife.model Failure time model selection
 #' @param num.release if more than 1 release group 1st column will be added to flat format file that will denote group name
 #' @param num.bootstrap number of resamples to estimate additional variance on survival estimates, default is 1000
 #' @param adjust.cjs Should CJS estimates be adjusted for estimated tag-life? Logical.
 #' @param rounding Number of decimal places on estimates
 #' @param plot.taglife plot the estimated tag-life curve. Logical.
 #'
-#' @return  out: list
-#' 	"taghist": name of the tag history file used
-#' 	"unadjusted.cjs"
-#' 	"$cjs.param": 2-column matrix with CJS estimates and standard errors
-#' 	"$d": vector of probability of censoring, given detection, at each detection site
-#' 	if taglife file provided:
-#' 	"tagfile": name of tag-life file used
-#' 	"taglife.model"
-#' 	"$modelout": name of model used to estimate tag-life failure curve
-#' 	"$lik.out": likelihood of model fit'
+#' @return Tables of estimates for unadjusted survival model and, if the taglife adjustment is used, taglife model estimates and adjusted survival estimates
 #' @export
 #'
 AdjSurv.fn=function (taglife.file=NULL, taghist.file,taghist.format="atlas", taglife.model="weibull3", num.release=1,

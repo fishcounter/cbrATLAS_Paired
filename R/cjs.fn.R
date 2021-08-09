@@ -99,3 +99,31 @@ cjs.fn=function(detect.in,L.in=NULL,seeds.in=NULL,se.out=F,d=NULL,bootstrap=F){
 
   return(list(cjs.param=cjs.param, d=d))
 }
+
+#' Title
+#'
+#' @param x detection history in wide ATlAS format, w/o rel.group or bin columns
+#'
+#' @return summary of counts.in/history and unique detection matrix in same order
+#' @export
+#'
+thist0=function(x) {
+  count=summary(factor(apply(x,1,paste,collapse="")))
+  tmp=names(count)
+  hist.matrix=as.data.frame(matrix(unlist(strsplit(tmp,split="")),nrow=length(tmp),byrow=T))
+  return(list(count=count,hist.matrix=hist.matrix))
+}
+
+#' Title
+#'
+#' @param x value to be rounded
+#'
+#' @return rounded value
+#' @export
+#'
+correct.fn=function(x){
+  # keep probabilities between 0 and 1
+  x[x<0.0000001]=1e-10
+  x[x>0.9999999]=1-1e-10
+  return(x)
+}

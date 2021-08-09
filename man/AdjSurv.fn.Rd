@@ -26,6 +26,8 @@ AdjSurv.fn(
 "flat" = format has 1 line per tag. tag.code, activation date, release date, and
 1 column per detection site filled with 1st detection times at that site (current format: "\%m/\%d/\%Y \%H:\%M")}
 
+\item{taglife.model}{Failure time model selection}
+
 \item{num.release}{if more than 1 release group 1st column will be added to flat format file that will denote group name}
 
 \item{num.bootstrap}{number of resamples to estimate additional variance on survival estimates, default is 1000}
@@ -37,16 +39,7 @@ AdjSurv.fn(
 \item{plot.taglife}{plot the estimated tag-life curve. Logical.}
 }
 \value{
-out: list
-"taghist": name of the tag history file used
-"unadjusted.cjs"
-"$cjs.param": 2-column matrix with CJS estimates and standard errors
-"$d": vector of probability of censoring, given detection, at each detection site
-if taglife file provided:
-"tagfile": name of tag-life file used
-"taglife.model"
-"$modelout": name of model used to estimate tag-life failure curve
-"$lik.out": likelihood of model fit'
+Tables of estimates for unadjusted survival model and, if the taglife adjustment is used, taglife model estimates and adjusted survival estimates
 }
 \description{
 Active Tag-Life-Adjusted Survival Modeling Fitting
