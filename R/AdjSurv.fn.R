@@ -15,6 +15,7 @@
 #' @param plot.taglife plot the estimated tag-life curve. Logical.
 #'
 #' @return Tables of estimates for unadjusted survival model and, if the taglife adjustment is used, taglife model estimates and adjusted survival estimates
+#'
 #' @export
 #'
 AdjSurv.fn=function (taglife.file=NULL, taghist.file,taghist.format="atlas", taglife.model="weibull3", num.release=1,
