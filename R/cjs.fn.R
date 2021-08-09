@@ -7,23 +7,11 @@
 #' @param d ???
 #' @param bootstrap Bootstrap or not. Logical.
 #'
-#' @return
+#' @return2-column matrix with CJS estimates and standard errors (if estimated).
 #' @export
 #'
 #' @examples
 cjs.fn=function(detect.in,L.in=NULL,seeds.in=NULL,se.out=F,d=NULL,bootstrap=F){
-  # estimate CJS w/o adjusting for tag life.  Censoring may or may not be included in history
-  # INPUT
-  # detect.in: [0|1|2] detection history in wide ATlAS format, w/o rel.group or bin columns
-  # L.in: vector of mean probabilities tag is working, given detection at each site.
-  #    if [L.in = NULL]: function will estimate the CJS parameters w/o tag failure (Li = 1)
-  # seeds.in: optional starting estimates for CJS model, includes additional p(censoring) per site at end
-  #    parameters are Si, pi, li where i is 1:(total number of sites-1)
-  #    di (p(censoring)), is not estimated in this version
-  # se.out: (T/F) calculate se(cjs var) from variance matrix of parameters using Hessian?
-  # OUTPUT
-  # cjs.params: 2-column matrix with CJS estimates and standard errors (if estimated).
-
   num.period=dim(detect.in)[2]
   if(is.null(L.in)){L.in=rep(1,num.period)} # if no tag failure, L = 100% for all sites
 
