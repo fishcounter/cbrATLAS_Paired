@@ -26,9 +26,6 @@ cjs.fn(
 
 \item{bootstrap}{Bootstrap or not. Logical.}
 }
-\value{
-
-}
 \description{
 Title
 }
