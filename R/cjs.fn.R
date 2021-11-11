@@ -4,7 +4,7 @@
 #' @param L.in L.in: vector of mean probabilities tag is working, given detection at each site. If NULL function will estimate the CJS parameters w/o tag failure.
 #' @param seeds.in seeds.in: optional starting estimates for CJS model, includes additional p(censoring) per site at end parameters are Si, pi, li where i is 1:(total number of sites-1) di (p(censoring)), is not estimated in this version
 #' @param se.out calculate se(cjs var) from variance matrix of parameters using Hessian? Logical.
-#' @param d ???
+#' @param d unclear what this is
 #' @param bootstrap Bootstrap or not. Logical.
 #'
 #' @return2-column matrix with CJS estimates and standard errors (if estimated).
