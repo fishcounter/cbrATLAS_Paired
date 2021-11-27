@@ -2,12 +2,12 @@
 #' @title Active Tag-Life-Adjusted Survival Modeling Fitting
 #'
 #' @param taglife.file Optional. Name of .csv file with taglife times in 1st column.  other columns ignored.  Header expected.
-#' @param taghist.file  Required. Name of .csv with detection histories. 2 formats currently supported.
+#' @param taghist.file  Required. dataframe or a filename of .csv with detection histories. 2 formats currently supported.
 #' @param taghist.format Format of tag detection histories: "atlas" or"flat"
 #' "atlas" = format based on Program ATLAS input files. 8 columns.  Each tag has 1 line per possible detection site
 #' 	"flat" = format has 1 line per tag. tag.code, activation date, release date, and
 #' 	          1 column per detection site filled with 1st detection times at that site (current format: "%m/%d/%Y %H:%M")
-#' @param taglife.model Failure time model selection
+#' @param taglife.model Failure time model obs (fc_obj)
 #' @param num.release if more than 1 release group 1st column will be added to flat format file that will denote group name
 #' @param num.bootstrap number of resamples to estimate additional variance on survival estimates, default is 1000
 #' @param adjust.cjs Should CJS estimates be adjusted for estimated tag-life? Logical.
@@ -18,12 +18,14 @@
 #'
 #' @export
 #'
-AdjSurv.fn=function (taglife.file=NULL, taghist.file,taghist.format="atlas", taglife.model="weibull3", num.release=1,
+AdjSurv.fn=function (taglife.file=NULL, taghist.file,taghist.format="atlas", taglife.model=NULL, num.release=1,
                      num.bootstrap = 1000, adjust.cjs = T, rounding = 4, plot.taglife = T) {
-  data.file = data.frame(read.csv(taghist.file, header = F, colClasses = c("character")))
+  if(is.data.frame(taghist.file)){data.file=taghist.file}else{
+    data.file = data.frame(read.csv(taghist.file, header = F, colClasses = c("character")))}
   if(!is.null(taglife.file)){
-    tag.life = read.csv(taglife.file, header = T)
-    tags.in = sort(tag.life[, 1])
+    if(is.data.frame(taglife.file)){tag.life=taglife.file}else{
+    tag.life = read.csv(taglife.file, header = T)}
+    tag.life = sort(tag.life[, 1])
   }
 
   # reformat detetion file if in Program ATLAS format from ATLAS to flat
@@ -45,14 +47,21 @@ AdjSurv.fn=function (taglife.file=NULL, taghist.file,taghist.format="atlas", tag
   }
   detects=apply(detects,2,as.numeric) # convert dataframe to numeric matrix to speed up code
 
-
   # Estimate unadjusted CJS
-
   unadj.cjs.params=cjs.fn(detect.in=detects,se.out=T)
 
   if(!is.null(taglife.file)){
     ################################################### Estimate tag-life curve
-    taglife.fit = fc_fit(time=tags.in,model=taglife.model)
+    if(is.null(taglife.model)){
+      mod_ls=failCompare::fc_fit(time=taglife.data$tag_life_days,model=c('weibull','weibull3','gompertz','gamma','lognormal','llogis','gengamma'))
+      mod_ls_ranked=fc_rank(mod_ls)
+
+      # currently, select best-fitting model automatically
+      taglife.fit=fc_select(mod_ls_ranked,model = as.character(mod_ls_ranked$"GOF_tab"[1,1]))
+    }else{taglife.fit=taglife.model}
+
+    if(plot.taglife){plot(taglife.fit)}
+
     ############# Estimate mean travel time to each site, use to calculate mean failure at each site
     tt.rel2site=mean.tt2site.fn(data.in,num.period,site.names)
 
@@ -61,7 +70,7 @@ AdjSurv.fn=function (taglife.file=NULL, taghist.file,taghist.format="atlas", tag
 
     ### once tag-life model has been selected, rerun to get bootstapped se's on P(Li)
     mean.tag.p=cjs.taglife.corr(activetime.matrix=tt.rel2site$activetime.matrix,site.names=site.names,
-                                num.period=num.period,taglife.fit=taglife.fit,num.boots=1000,cjs.est=unadj.cjs.params$cjs.param)
+                                num.period=num.period,taglife.fit=taglife.fit,num.boots=10,cjs.est=unadj.cjs.params$cjs.param)
 
 
     # Estimate adjusted CJS
@@ -73,9 +82,13 @@ AdjSurv.fn=function (taglife.file=NULL, taghist.file,taghist.format="atlas", tag
 
 
   ### create output list from analysis
-  out=list(taghist=taghist.file, unadjusted.cjs=unadj.cjs.params)
+  if(is.data.frame(taghist.file)){file.out=deparse(substitute(taghist.file))}else{
+    file.out=taghist.file
+    }
+  out=list(taghist=file.out, unadjusted.cjs=unadj.cjs.params)
   if(!is.null(taglife.file)){
-    out$tagfile=taglife.file
+    if(is.data.frame(taglife.file)){out$tagfile=deparse(substitute(taglife.file))}else{
+    out$tagfile=taglife.file}
     out$taglife.model=taglife.fit
     out$mean.tag.pLive=mean.tag.p[2:3]
     if(adjust.cjs){out$adjusted.cjs=adj.cjs.params[1]}
