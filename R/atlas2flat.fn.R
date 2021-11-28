@@ -1,5 +1,4 @@
 
-#' Title
 #'
 #' @param data.in table: columns = release group name, bin number, tag id, tag activation date/time, tag release date/time, site name, detection (1=yes, 0 = no), detection date/time
 #'
