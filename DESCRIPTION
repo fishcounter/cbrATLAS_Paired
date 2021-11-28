@@ -1,6 +1,8 @@
 Package: ATLAS
+Package: cbrATLAS
 Title: Active Tag-Life-Adjusted Survival Modeling
 Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: 
     person(given = "First",
            family = "Last",
@@ -11,7 +13,26 @@ Description: What the package does (one paragraph).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Imports: failCompare
+    person(given = "Richard",
+           family = "Townsend",
+           role = c("cre"),
+           email = "rich@uw.edu",
+           comment = c(ORCID = "0000-0003-0880-0873"))
+Description: ATLAS is based on a the stand-alone program provided by Columbia 
+    Basin Research (University of Washington) to analyze active tag mark-
+    recapture studies.  The use of an active tag increases subsequent detetion 
+    probabilities, but relies on a signal that may fail due to battery or 
+    equipment failure.  Without adjusting for this probability, estimated 
+    survival will be under-estimated.  Though reliant on having a tag-life study 
+    from representative samples of tags used in the study, the method in this 
+    program is a conservative correction.  See Townsend, R. L., J. R. Skalski, 
+    P. Dillingham, and T. W. Steig. 2006. Correcting bias in survival estimation 
+    resulting from tag failure in acoustic and radiotelemetry studies. Journal 
+    of Agricultural, Biological, and Environmental Statistics 11:183-196.
+License: GPL-3
+imports: failCompare
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
