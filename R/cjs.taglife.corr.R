@@ -1,4 +1,9 @@
-#' @title Estimate time tag active (activation to 1st detection time)
+#' @title Estimate time tag active (tag activation to 1st detection time)
+#'
+#' @description Uses the time a tag has been active to estimate the probability
+#' it would fail when detected.  The average P(failure) is estimated at
+#' each site.  The estimated survival is divided by the mean P(failure) at that
+#' site to adjust for the predicted tag failure in the study. (Townsend etal,  )
 #'
 #' @param activetime.matrix matrix of time elapsed after tag activation to 1st detection at site. 1 column per site
 #' @param site.names vector of site designations
@@ -7,27 +12,13 @@
 #' @param num.boots bootstrap for variance on estimated P(Li) for each site? Use 0 for initial fittings
 #' @param cjs.est 2-column matrix with unadjusted CJS estimates and standard errors
 #'
-#' @return model.out: name of model fit to tag-life curve
-#' @export
+#' @importFrom failCompare fc_pred
 #'
+#' @return model.out  name of model fit to tag-life curve;L vector of P(Li); L.se matrix of 2 columns (L, L.se); boot.L.matrix matrix of P(Li) columns and num.boots rows using bootstrapped taglife values only.
+#' @export
 cjs.taglife.corr=function(activetime.matrix,site.names=NULL,num.period=num.period,taglife.fit=taglife.fit,num.boots=0,cjs.est=NULL){
-  # estimate time tag active (activation to 1st detection time)
-  # activetime.matrix: matrix of time elapsed after tag activation to 1st detection at site. 1 column per site
-  # site.names: vector of site designations
-  # num.period: number of detection sites
-  # taglife.fit: results from fitting tag-life study tags. model name, estimated parameters, mean time to fail
-  # num.boots: bootstrap for variance on estimated P(Li) for each site? Use 0 for initial fittings.
-  # cjs.params: 2-column matrix with unadjusted CJS estimates and standard errors
-  # OUTPUT
-  # model.out: name of model fit to tag-life curve
-  # L: [if num.boots=0] vector of P(Li), one for each detection site
-  # L.se: [if num.boots=0] NULL
-  #    [if num.boots>0] matrix of 2 columns (L, L.se), and 1 row for each detection site.
-  # boot.L.matrix: [if num.boots=0] NULL
-  #  [if num.boots>0] matrix of P(Li) columns and num.boots rows using bootstrapped taglife values only.
 
   model.used=taglife.fit$mod_choice
-
 
   var.ratio.fn=function(Ti,Tj,var.Ti,var.Tj,cov.TiTj){
     # B.25 ATLAS 1.4 manual
@@ -40,7 +31,7 @@ cjs.taglife.corr=function(activetime.matrix,site.names=NULL,num.period=num.perio
   for (i in 1:num.period) {
     temp.time = as.numeric(activetime.matrix[!is.na(activetime.matrix[, i]),i])
 
-    fail.times=fc_pred(times=temp.time,pars=taglife.fit$mod_objs[,1],model=model.used)
+    fail.times=failCompare::fc_pred(mod_obj = taglife.fit,times=temp.time)
     L.out[i] = mean(fail.times)
   }
 
@@ -50,8 +41,8 @@ cjs.taglife.corr=function(activetime.matrix,site.names=NULL,num.period=num.perio
     est.s=cjs.est[c(1:(num.period-1),dim(cjs.est)[1]),]
 
     boot.Ls=boot.L(at.time.matrix=activetime.matrix,model.in=taglife.fit,num.boots=num.boots)
-    L.cov1 = cov(boot.Ls$L.matrix) # only taglife study resampled
-    L.cov2 = cov(boot.Ls$L2.matrix) # taglife and active time resampled
+    L.cov1 = stats::cov(boot.Ls$L.matrix) # only taglife study resampled
+    L.cov2 = stats::cov(boot.Ls$L2.matrix) # taglife and active time resampled
 
     L.var1 = diag(L.cov1)
     L.var2 = diag(L.cov2)
@@ -77,48 +68,6 @@ cjs.taglife.corr=function(activetime.matrix,site.names=NULL,num.period=num.perio
   }else{L.se=NULL; adj.Si.se=NULL}
 
   return(list(model.out=model.used,L=L.out,L.se=L.se,adj.Si.se=adj.Si.se))
-}
-
-boot.L=function(at.time.matrix,model.in,num.boots){
-  # bootstrap "activation to 1st detection per site" to get standard errors on estimated p(Li)
-  # INPUT
-  # at.time.matrix: matrix of time from activation to detection at site i
-  # model.in: output from taglife.fn
-  # num.boots: number of desired resampling bootstraps to estimes se on p(Li)
-  # OUTPUT
-  # L.matrix: matrix of bootstrapped Li w/resampled taglife tags
-  # L2.matrix: matrix of bootstrapped Li 2/resampled taglife tags and active times to detection
-  num.period=dim(at.time.matrix)[2]
-
-  L.matrix=matrix(0,nrow=num.boots,ncol=num.period)
-  L2.matrix=matrix(0,nrow=num.boots,ncol=num.period)
-
-  # estimate s^2[Ti|d] based on resampled taglife study and observed active time
-  for (i in 1:num.boots) {
-    t.in=sort(sample(model.in$times[,1],replace=T))
-    x=fc_fit(time=t.in,model=model.in$mod_choice)
-
-    for (j in 1:dim(at.time.matrix)[2]){
-      at.temp=as.numeric(at.time.matrix[!is.na(at.time.matrix[, j]),j])
-      L.matrix[i,j]=mean(fc_pred(time=at.temp,pars=x$mod_objs[,1],model=model.in$mod_choice))
-    }
-  }
-
-  # estimate s^2[Ti] based on resampled taglife study and resampled observed active time
-  for (i in 1:num.boots) {
-    t.in=sort(sample(model.in$times[,1],replace=T))
-    x=fc_fit(time=t.in,model=model.in$mod_choice)
-
-
-    for (j in 1:dim(at.time.matrix)[2]){
-      at.sample=sample(1:dim(at.time.matrix)[1],replace=T)
-      at.tmp=at.time.matrix[at.sample,]
-      at.temp=as.numeric(at.tmp[!is.na(at.tmp[, j]),j])
-      L2.matrix[i,j]=mean(fc_pred(time=at.temp,pars=x$mod_objs[,1],model=model.in$mod_choice))
-    }
-  }
-
-  return(list(L.matrix=L.matrix,L2.matrix=L2.matrix))
 }
 
 
