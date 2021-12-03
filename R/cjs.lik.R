@@ -1,10 +1,10 @@
-#' @title CJS likelihood function for (unadjusted or adjusted-for-taglife )
+#' @title Likelihood function for unadjusted- or adjusted-for-taglife CJS
 #'
-#' @param params the likelihood mle estimators (S,p,l) in a single vector
-#' @param counts.in vector of summed dections by history (names are history)
+#' @param params the likelihood MLE estimators (S,p,l) in a single vector
+#' @param counts.in vector of summed detections by history (names are history)
 #' @param num.period number of detection periods in history
 #' @param use.hist matrix of unique detection histories
-#' @param L.in The probability that a tag is working by the time they reach each detection site. set to 1 if not active tags p(tag working) is cumulative to each site, not multiplicate from site-to-site
+#' @param L.in The probability that a tag is working at detection site time. Set to 1 if active tags not indicated. p(tag working) is cumulative to each site, not multiplicate from site-to-site
 #' @param d.in the probability a tag is censored, given that it's detected
 #'
 #' @return negative log-likelihood
