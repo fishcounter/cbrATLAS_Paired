@@ -2,7 +2,7 @@
 % Please edit documentation in R/cjs.taglife.corr.R
 \name{cjs.taglife.corr}
 \alias{cjs.taglife.corr}
-\title{Estimate time tag active (activation to 1st detection time)}
+\title{Estimate time tag active (tag activation to 1st detection time)}
 \usage{
 cjs.taglife.corr(
   activetime.matrix,
@@ -27,8 +27,11 @@ cjs.taglife.corr(
 \item{cjs.est}{2-column matrix with unadjusted CJS estimates and standard errors}
 }
 \value{
-model.out: name of model fit to tag-life curve
+model.out  name of model fit to tag-life curve;L vector of P(Li); L.se matrix of 2 columns (L, L.se); boot.L.matrix matrix of P(Li) columns and num.boots rows using bootstrapped taglife values only.
 }
 \description{
-Estimate time tag active (activation to 1st detection time)
+Uses the time a tag has been active to estimate the probability
+it would fail when detected.  The average P(failure) is estimated at
+each site.  The estimated survival is divided by the mean P(failure) at that
+site to adjust for the predicted tag failure in the study. (Townsend etal,  )
 }

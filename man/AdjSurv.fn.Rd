@@ -8,9 +8,9 @@ AdjSurv.fn(
   taglife.file = NULL,
   taghist.file,
   taghist.format = "atlas",
-  taglife.model = "weibull3",
+  taglife.model = NULL,
   num.release = 1,
-  num.bootstrap = 1000,
+  num.bootstrap = 250,
   adjust.cjs = T,
   rounding = 4,
   plot.taglife = T
@@ -19,16 +19,16 @@ AdjSurv.fn(
 \arguments{
 \item{taglife.file}{Optional. Name of .csv file with taglife times in 1st column.  other columns ignored.  Header expected.}
 
-\item{taghist.file}{Required. Name of .csv with detection histories. 2 formats currently supported.}
+\item{taghist.file}{Required. dataframe or a filename of .csv with detection histories. 2 formats currently supported.}
 
-\item{taghist.format}{Format of tag detection histories: "atlas" or"flat"
+\item{taghist.format}{Format of tag detection histories: "atlas" or"flat".
 "atlas" = format based on Program ATLAS input files. 8 columns.  Each tag has 1 line per possible detection site
 "flat" = format has 1 line per tag. tag.code, activation date, release date, and
 1 column per detection site filled with 1st detection times at that site (current format: "\%m/\%d/\%Y \%H:\%M")}
 
-\item{taglife.model}{Failure time model selection}
+\item{taglife.model}{Failure time model obs (fc_obj)}
 
-\item{num.release}{if more than 1 release group 1st column will be added to flat format file that will denote group name}
+\item{num.release}{if more than 1 release group 1st column will be added to flat format file that will denote group name (currently not working)}
 
 \item{num.bootstrap}{number of resamples to estimate additional variance on survival estimates, default is 1000}
 
@@ -42,5 +42,9 @@ AdjSurv.fn(
 Tables of estimates for unadjusted survival model and, if the taglife adjustment is used, taglife model estimates and adjusted survival estimates
 }
 \description{
-Active Tag-Life-Adjusted Survival Modeling Fitting
+Analysis of release-recapture data from a study that uses active-tag technology.
+Estimates survival and detection probabilities, and if provided, the average probability
+a tag is active at each detection site.  These estimates are then used to adjust estimated survival for
+potential tag-failure that may be interpreted as mortality. Methods are documented in Program ATLAS 1.4:
+Active Tag Life Adjusted Survival (http://www.cbr.washington.edu/sites/default/files/manuals/ATLAS_1_4_Manual_0.pdf)
 }

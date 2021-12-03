@@ -2,30 +2,24 @@
 % Please edit documentation in R/cjs.fn.R
 \name{cjs.fn}
 \alias{cjs.fn}
-\title{Title}
+\title{Summarize detection histories provide CJS estimates}
 \usage{
-cjs.fn(
-  detect.in,
-  L.in = NULL,
-  seeds.in = NULL,
-  se.out = F,
-  d = NULL,
-  bootstrap = F
-)
+cjs.fn(detect.in, L.in = NULL, seeds.in = NULL, se.out = F, d = NULL)
 }
 \arguments{
 \item{detect.in}{Detection history in wide ATlAS format, w/o rel.group or bin columns}
 
 \item{L.in}{L.in: vector of mean probabilities tag is working, given detection at each site. If NULL function will estimate the CJS parameters w/o tag failure.}
 
-\item{seeds.in}{seeds.in: optional starting estimates for CJS model, includes additional p(censoring) per site at end parameters are Si, pi, li where i is 1:(total number of sites-1) di (p(censoring)), is not estimated in this version}
+\item{seeds.in}{optional starting estimates for CJS model parameters Si, pi, li where i is 1:(total number of sites-1)}
 
-\item{se.out}{calculate se(cjs var) from variance matrix of parameters using Hessian? Logical.}
+\item{se.out}{calculate se(cjs) from variance matrix of parameters using Hessian? Logical.}
 
-\item{d}{???}
-
-\item{bootstrap}{Bootstrap or not. Logical.}
+\item{d}{proportion of detected tags censored at a location}
+}
+\value{
+2-column matrix with CJS estimates and standard errors (if estimated).
 }
 \description{
-Title
+CJS.fn summarizes the individual detection histories, estimates seeds for Cormack-Jolly-Seber likelhood fn
 }

@@ -2,20 +2,20 @@
 % Please edit documentation in R/cjs.lik.R
 \name{cjs.lik}
 \alias{cjs.lik}
-\title{CJS likelihood function for (unadjusted or adjusted-for-taglife )}
+\title{Likelihood function for unadjusted- or adjusted-for-taglife CJS}
 \usage{
 cjs.lik(params, counts.in, num.period, use.hist, L.in = NULL, d.in = NULL)
 }
 \arguments{
-\item{params}{the likelihood mle estimators (S,p,l) in a single vector}
+\item{params}{the likelihood MLE estimators (S,p,l) in a single vector}
 
-\item{counts.in}{vector of summed dections by history (names are history)}
+\item{counts.in}{vector of summed detections by history (names are history)}
 
 \item{num.period}{number of detection periods in history}
 
 \item{use.hist}{matrix of unique detection histories}
 
-\item{L.in}{The probability that a tag is working by the time they reach each detection site. set to 1 if not active tags p(tag working) is cumulative to each site, not multiplicate from site-to-site}
+\item{L.in}{The probability that a tag is working at detection site time. Set to 1 if active tags not indicated. p(tag working) is cumulative to each site, not multiplicate from site-to-site}
 
 \item{d.in}{the probability a tag is censored, given that it's detected}
 }
@@ -23,5 +23,5 @@ cjs.lik(params, counts.in, num.period, use.hist, L.in = NULL, d.in = NULL)
 negative log-likelihood
 }
 \description{
-CJS likelihood function for (unadjusted or adjusted-for-taglife )
+Likelihood function for unadjusted- or adjusted-for-taglife CJS
 }
