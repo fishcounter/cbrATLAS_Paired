@@ -1,17 +1,18 @@
-#' Title
+#' @title  Summarize detection histories provide CJS estimates
+#'
+#' @description CJS.fn summarizes the individual detection histories, estimates seeds for Cormack-Jolly-Seber likelhood fn, based on Skalski, J. R., S. G. Smith, R. N. Iwamoto, J. G. Williams, and A. Hoffmann.  1998.  Use of passive integrated transponder tags to estimate survival of migrating juvenile salmonids in the Snake and Columbia Rivers. Canadian Journal of Fisheries and Aquatic Sciences 55:1484-1493.
+#'  This likelihood is also used to adjusted estimated tag life as described in  Townsend, R. L., J. R. Skalski, P. Dillingham, and T. W. Steig.  2006.  Correcting bias in survival estimation resulting from tag failure in acoustic and radiotelemetry studies.  Journal of Agricultural, Biological, and Environmental Statistics 11:183-196.
 #'
 #' @param detect.in Detection history in wide ATlAS format, w/o rel.group or bin columns
 #' @param L.in L.in: vector of mean probabilities tag is working, given detection at each site. If NULL function will estimate the CJS parameters w/o tag failure.
-#' @param seeds.in seeds.in: optional starting estimates for CJS model, includes additional p(censoring) per site at end parameters are Si, pi, li where i is 1:(total number of sites-1) di (p(censoring)), is not estimated in this version
-#' @param se.out calculate se(cjs var) from variance matrix of parameters using Hessian? Logical.
-#' @param d unclear what this is
-#' @param bootstrap Bootstrap or not. Logical.
+#' @param seeds.in optional starting estimates for CJS model parameters Si, pi, li where i is 1:(total number of sites-1)
+#' @param se.out calculate se(cjs) from variance matrix of parameters using Hessian? Logical.
+#' @param d proportion of detected tags censored at a location
 #'
-#' @return2-column matrix with CJS estimates and standard errors (if estimated).
+#' @return 2-column matrix with CJS estimates and standard errors (if estimated).
 #' @export
 #'
-#' @examples
-cjs.fn=function(detect.in,L.in=NULL,seeds.in=NULL,se.out=F,d=NULL,bootstrap=F){
+cjs.fn=function(detect.in,L.in=NULL,seeds.in=NULL,se.out=F,d=NULL){
   num.period=dim(detect.in)[2]
   if(is.null(L.in)){L.in=rep(1,num.period)} # if no tag failure, L = 100% for all sites
 
@@ -57,7 +58,7 @@ cjs.fn=function(detect.in,L.in=NULL,seeds.in=NULL,se.out=F,d=NULL,bootstrap=F){
   reltol.in=1e-30
   maxit.in=2e+06
 
-  cjs.out = optim(seeds.in, cjs.lik, counts.in = counts.in, num.period = num.period, use.hist=obs.hist,L=L.in,d.in=d,
+  cjs.out = stats::optim(seeds.in, cjs.lik, counts.in = counts.in, num.period = num.period, use.hist=obs.hist,L=L.in,d.in=d,
                   method = "BFGS", hessian = F, control = list(parscale = rep(parscale.in, num.period * 2 - 1), reltol = reltol.in,maxit=maxit.in,ndeps=rep(parscale.in, num.period * 2 - 1)))
   cjs.out$par=correct.fn(cjs.out$par)
 
@@ -65,7 +66,7 @@ cjs.fn=function(detect.in,L.in=NULL,seeds.in=NULL,se.out=F,d=NULL,bootstrap=F){
   #print(cjs.out$par)
   if(se.out){
     # rerun to get hessian
-    cjs.out = optim(cjs.out$par, cjs.lik, counts.in = counts.in, num.period = num.period, use.hist=obs.hist,L=L.in,d.in=d,
+    cjs.out = stats::optim(cjs.out$par, cjs.lik, counts.in = counts.in, num.period = num.period, use.hist=obs.hist,L=L.in,d.in=d,
                     method = "BFGS", hessian = T, control = list(parscale = rep(parscale.in, num.period * 2 - 1), reltol = reltol.in,maxit=maxit.in,ndeps=rep(parscale.in, num.period * 2 - 1)))
     cjs.out$par=correct.fn(cjs.out$par)
 
@@ -86,33 +87,5 @@ cjs.fn=function(detect.in,L.in=NULL,seeds.in=NULL,se.out=F,d=NULL,bootstrap=F){
   }
 
   return(list(cjs.param=cjs.param, d=d))
-}
-
-#' Title
-#'
-#' @param x detection history in wide ATlAS format, w/o rel.group or bin columns
-#'
-#' @return summary of counts.in/history and unique detection matrix in same order
-#' @export
-#'
-thist0=function(x) {
-  count=summary(factor(apply(x,1,paste,collapse="")))
-  tmp=names(count)
-  hist.matrix=as.data.frame(matrix(unlist(strsplit(tmp,split="")),nrow=length(tmp),byrow=T))
-  return(list(count=count,hist.matrix=hist.matrix))
-}
-
-#' Title
-#'
-#' @param x value to be rounded
-#'
-#' @return rounded value
-#' @export
-#'
-correct.fn=function(x){
-  # keep probabilities between 0 and 1
-  x[x<0.0000001]=1e-10
-  x[x>0.9999999]=1-1e-10
-  return(x)
 }
 
