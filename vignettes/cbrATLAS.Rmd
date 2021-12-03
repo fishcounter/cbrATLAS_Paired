@@ -1,0 +1,59 @@
+---
+title: "cbrATLAS"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{cbrATLAS}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+The original ATLAS program (http://www.cbr.washington.edu/analysis/apps/atlas) provides the ability to analyze mark-recapture data that used active-tag technology, and to adjust the observed survival estimates for potential tag-failure that may be misidentified as a mortality of the marked animal.  The cbrATLAS R package was created to allow this analysis be conducted in R.  In addition, cbrATLAS incorporates an update of the original version to include the R package **failCompare**, increasing the number of model fitting options of tag-life data to predict tag-life of the active tags used in the study.  The failCompare package also provides goodness-of-fits and rankings of the various models, to assist selection of the most appropriate model of tag-life, along with plotting the expected tag-life curve against observed tag failures.
+
+cbrATLAS is currently capable of analyzing single release data histories (with and without censoring events) that may or may not require correction for active-tag failure.  Future iterations are planned to incorporate paired release , Virtual-Paired Release (ViPRe), Virtual Release Dead Fish Correction (ViRDCt) study designs.
+
+
+```{r setup}
+library(cbrATLAS)
+```
+
+Load in the Single Release ATLAS Practice File
+```{r}
+data(single.rel)
+
+AdjSurv.fn(taghist.file=single.rel) # cjs unadjusted for taglife
+
+```
+
+The output from this run is a list object with the name of the detection history file and the unadjusted CJS survival estimates and standard errors. 
+
+To apply a taglife correction, add results from a tag-life study. If a particular model is not pre-selected to fit the taglife data, failCompare will try a suite of models, print a ranking of the model fits, and automatically use the best fitting model to apply the corrections due to estimated tag-life.
+```{r}
+data(taglife.data) # Taglife ATLAS Practice File
+
+tmp=AdjSurv.fn(taglife.file=taglife.data,taghist.file=single.rel,plot.taglife=F) # cjs adjusted for taglife
+tmp[-c(1:2)] # additional analysis performed
+
+```
+
+In addition to the unadjusted CJS estimates, the additional output include the model fit results printed to the screen, and selected model for tag-life, the average probability and associated standard error a tag was active at each detection site in the study, and the adjusted CJS estimates based on those probabilities added to the output list.
+
+If a particular tag-life model is desired, an fc_obj must be created first. This object is then provided to AdjSurv.fn, and applied to the given detection history.
+
+```{r}
+TL_weib2=failCompare::fc_fit(time=taglife.data$tag_life_days,model="weibull")
+#'\dontrun{
+#'AdjSurv.fn(taglife.file=taglife.data,taghist.file=single.rel,taglife.model=TL_weib2,plot.taglife=F)
+#'}
+```
+
+The mark-recapture for the unadusted CJS model is based on 
+Skalski, J. R., S. G. Smith, R. N. Iwamoto, J. G. Williams, and A. Hoffmann.  1998.  Use of passive integrated transponder tags to estimate survival of migrating juvenile salmonids in the Snake and Columbia Rivers. Canadian Journal of Fisheries and Aquatic Sciences 55:1484-1493.
+
+The adjustment to those estimates are based on
+Townsend, R. L., J. R. Skalski, P. Dillingham, and T. W. Steig.  2006.  Correcting bias in survival estimation resulting from tag failure in acoustic and radiotelemetry studies.  Journal of Agricultural, Biological, and Environmental Statistics 11:183-196.
