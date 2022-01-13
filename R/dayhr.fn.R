@@ -3,18 +3,20 @@
 #' @description This function converts date and time into a yyyy-mm-dd hh:mm:ss format.
 #'
 #' @param x Character vector of date-time values
-#'		currently accepted as input formats include: "m/%d/%Y %I:%M:%S %p"                                (AM/PM)
-#'									    "%Y-%m-%d %H:%M:%S" or "%m/%d/%Y %H:%M:%S"    (with seconds)
-#'									    "Y-%m-%d %H:%M" or "%m/%d/%Y %H:%M"        (without seconds)
-#' @param secs Seconds included in time values. 
-#' @param AMPM Time format in AM/PM format.
+#'		currently accepted as input formats include: 
+#' \describe{
+#'    \item{"m/%d/%Y %I:%M:%S %p"}{(AM/PM)}
+#'	  \item{"%Y-%m-%d %H:%M:%S" or "%m/%d/%Y %H:%M:%S"}{(with seconds)}
+#'	  \item{"Y-%m-%d %H:%M" or "%m/%d/%Y %H:%M"}{(without seconds)}
+#' }
+#' @param secs (T|F) Seconds are included in time values. 
+#' @param AMPM (T|F) Time format is in AM/PM format.
 #'
-#' @return striptime object in "%Y-%m-%d %H:%M:%S" or "%Y-%m-%d %H:%M" format
+#' @return Returns a strptime object in "%Y-%m-%d %H:%M:%S" or "%Y-%m-%d %H:%M" format
 #'
 #' @examples
-#' \dontrun{
 #' dayhr.fn("2021-05-10 14:22:34", secs =T , AMPM = F)
-#' }
+#' 
 #' @export
 #'
 dayhr.fn=function(x,secs=T,AMPM=F){

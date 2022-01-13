@@ -1,12 +1,12 @@
-#' @title  Summarizes detection histories and provides Cormack-Jolly-Seber estimates.
+#' @title  Summarizes detection histories and provides Cormack-Jolly-Seber estimates without or without adjustment of potential tag-failure.
 #'
 #' @description CJS.fn summarizes the individual detection histories and estimates seeds for Cormack-Jolly-Seber likelhood fn. It is based on Skalski, J. R., S. G. Smith, R. N. Iwamoto, J. G. Williams, and A. Hoffmann. 1998. Use of passive integrated transponder tags to estimate survival of migrating juvenile salmonids in the Snake and Columbia Rivers. Canadian Journal of Fisheries and Aquatic Sciences 55:1484-1493.
-#'  This likelihood is also used to adjust estimated tag life as described in Townsend, R. L., J. R. Skalski, P. Dillingham, and T. W. Steig. 2006. Correcting bias in survival estimation resulting from tag failure in acoustic and radiotelemetry studies.  Journal of Agricultural, Biological, and Environmental Statistics 11:183-196.
+#'  This likelihood is also used to adjust survival for estimated tag life as described in Townsend, R. L., J. R. Skalski, P. Dillingham, and T. W. Steig. 2006. Correcting bias in survival estimation resulting from tag failure in acoustic and radiotelemetry studies.  Journal of Agricultural, Biological, and Environmental Statistics 11:183-196.
 #'
 #' @param detect.in Detection history in wide ATlAS format without rel.group or bin columns.
 #' @param L.in L.in: Vector of mean probabilities tag is working given detection at each site. If NULL, function will estimate the CJS parameters without tag failure.
 #' @param seeds.in Optional starting estimates for CJS model parameters Si, pi, li where i is 1:(total number of sites-1).
-#' @param se.out Calculate se(cjs) from variance matrix of parameters using Hessian? Logical.
+#' @param se.out (T|F) Should standard error of cjs parameters be estimated.  Uses variance matrix based on Hessian from MLE of cjs likelihood.
 #' @param d proportion of detected tags censored at a location
 #'
 #' @return Returns a two-column matrix with CJS estimates and standard errors (if estimated).

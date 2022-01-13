@@ -1,4 +1,4 @@
-#' @title Bootstraps "activation to 1st detection per site" to get standard errors on estimated p(Li)
+#' @title Bootstraps observed "activation to 1st detection per site" times to get standard errors on estimated p(Li)
 #'
 #' @description To better estimate the variance on the adjusted-for-tag-failure survival estimates,
 #' a bootstrap is conducted on both the data used estimate tag-life and on the observed times the study tags were active.
@@ -6,14 +6,18 @@
 #'
 #' @param at.time.matrix Matrix of time from activation to detection at site i.
 #' @param model.in Output from taglife.fn.
-#' @param num.boots Number of desired resampling bootstraps to estimate the standard error for each taglife estimate.
+#' @param num.boots (default = 100) Number of desired resampling bootstraps to estimate the standard error for each taglife estimate.
 #'
 #' @import failCompare
 #'
-#' @return Creates a list of L.matrix matrix of bootstrapped Li w/resampled taglife tags; L2.matrix matrix of bootstrapped Li w/resampled taglife tags and active times to detection.
+#' @return Returns a list called L.matrix that contains
+#' \describe{
+#'     \item{L.matrix}{means from bootstrapping that is used to correct survival.}
+#'     \item{L2.matrix}{matrix of bootstrapped Li w/resampled taglife tags and active times to detection.}
+#'     }
 #' @export
 #'
-boot.L=function(at.time.matrix,model.in,num.boots){
+boot.L=function(at.time.matrix,model.in,num.boots=100){
     num.period=dim(at.time.matrix)[2]
 
   L.matrix=matrix(0,nrow=num.boots,ncol=num.period)

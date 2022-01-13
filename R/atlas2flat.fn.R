@@ -7,7 +7,7 @@
 #'
 #' @param data.in Table: columns = release group name, bin number, tag id, tag activation date/time, tag release date/time, site name, detection (1 = yes, 0 = no), detection date/time
 #'
-#' @return Creates a table with columns: release group name, bin number, tag id, activation date/time, tag release date/time, 1 column per site name with detection time (blank if no detection)
+#' @return Returns a table with columns: release group name, bin number, tag id, activation date/time, tag release date/time, 1 column per site name with detection time (blank if no detection)
 #' @export
 #'
 atlas2flat.fn=function(data.in){

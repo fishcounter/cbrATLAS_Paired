@@ -10,20 +10,32 @@
 #' @param taglife.file Optional. Name of .csv file with taglife times in first column. Other columns ignored. Header expected.
 #' @param taghist.file  Required. Dataframe or a filename of .csv file with detection histories.
 #' @param taghist.format Required. Format of tag detection histories
-#' * "atlas": format based on Program ATLAS input files. Eight columns. Each tag has one line per possible detection site.
-#' * "flat":  format has one line per tag: tag.code, activation date, release date, and
-#' 	          one column per detection site filled with first detection times at that site
-#' @param taglife.model Failure time model obs (fc_obj).
-#' @param num.release If more than one release group, first column will be added to flat format file to denote group name (not implemented in this version).
-#' @param num.bootstrap Number of resamples to estimate additional variance on survival estimates, default is 1000.
-#' @param adjust.cjs Logical (T|F) adjust CJS estimates for estimated tag-life.
-#' @param rounding Number of decimal places on estimates.
-#' @param plot.taglife Logical (T|F) Plot the estimated tag-life curve.
+#' \describe{
+#'   \item{"atlas"}{format based on Program ATLAS input files. Eight columns. Each tag has one line per possible detection site.}
+#'   \item{"flat"}{format has one line per tag: tag.code, activation date, release date, and
+#' 	          one column per detection site filled with first detection times at that site}
+#' }
+#' @param taglife.model fc_obj. Failure time model object.
+#' @param num.release (default = 1) If more than one release group, first column will be added to flat format file to denote group name (not implemented in this version).
+#' @param num.bootstrap (default = 1000) Number of resample iterations to estimate additional variance on survival estimates.
+#' @param adjust.cjs (T|F) (default = T) adjust CJS estimates for estimated tag-life.
+#' @param rounding  (default = 4)  Number of decimal places on estimate.
+#' @param plot.taglife (T|F) (default = T) Plot the estimated tag-life curve.
+#'
 #' @importFrom failCompare fc_fit fc_rank fc_select
-#' @return Output consists of a list of tables of the unadjusted survival model and, if the taglife adjustment is used, taglife model estimates and adjusted survival estimates.
+#'
+#' @return Returns a list "Out" with (if provided)
+#' \describe{
+#'   \item{taghist}{tagfile filename}
+#'   \item{unadjusted.cjs}{table of unadjusted survival estimates}
+#'   \item{tagfile}{tag life filename}
+#'   \item{taglife.model}{taglife model name}
+#'   \item{mean.tag.pLIve}{expect proportion tags active to each site}
+#'   \item{adjust.cjs}{adjusted survival estimates}
+#'   }
 #'
 #'
-#' @details all date-times are assumed to be character vector with format: "%m/%d/%Y %H:%M"
+#' @details All date-times are assumed to be character vector with format: "%m/%d/%Y %H:%M"
 #'
 #'
 #' @export

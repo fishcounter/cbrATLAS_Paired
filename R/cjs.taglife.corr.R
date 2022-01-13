@@ -3,18 +3,25 @@
 #' @description Uses the time a tag has been active to estimate the probability
 #' it would fail when detected. The average P(failure) is estimated at
 #' each site. The estimated survival is divided by the mean P(failure) at that
-#' site to adjust for the predicted tag failure in the study. (Townsend et al.,  )
+#' site to adjust for the predicted tag failure in the study. (Townsend et al., 2006)
 #'
 #' @param activetime.matrix Matrix of time elapsed after tag activation to first detection at site. One column per site.
 #' @param site.names Vector of site designations.
 #' @param num.period Number of detection sites.
 #' @param taglife.fit Results from fitting tag-life study tags: Model name, estimated parameters, mean time to fail.
-#' @param num.boots Bootstrap for variance on estimated P(Li) for each site? Uses 0 for initial fittings.
+#' @param num.boots Number of Bootstrap interations for variance on estimated P(Li) for each site. Uses 0 for initial fittings.
 #' @param cjs.est 2-column Matrix with unadjusted Cormack-Jolly-Seber estimates and standard errors.
 #'
 #' @importFrom failCompare fc_pred
 #'
-#' @return model.out  name of model fit to tag-life curve; L vector of P(Li); L.se matrix of 2 columns (L, L.se); boot.L.matrix matrix of P(Li) columns and num.boots rows using bootstrapped taglife values only.
+#' @return returns a list with
+#' \describe{
+#'    \item{model.out}{name of model used to fit tag-life curve}
+#'    \item{L}{vector of probabilty tag active to each detection site}
+#'    \item{L.se}{vector of standard errors on each estimated L}
+#'    \item{adj.Si.se}{vector of estimated standared errors for adjusted survival estimates}
+#'    }
+#'
 #' @export
 cjs.taglife.corr=function(activetime.matrix,site.names=NULL,num.period=num.period,taglife.fit=taglife.fit,num.boots=0,cjs.est=NULL){
 

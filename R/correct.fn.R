@@ -6,9 +6,9 @@
 #' detection rates. The CJS estimate may estimated greater than 100%, and this may
 #' be included in later iterations.
 #'
-#' @param x Value to be rounded up to be between 0 to 1.
+#' @param x Value to be rounded up/down to be between 0 to 1.
 #'
-#' @return rounded value
+#' @return Returns original value if between 0 and 1, otherwise rounds up to 1e-10 or down to 1-1e-10.
 #' @export
 #'
 correct.fn=function(x){
