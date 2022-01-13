@@ -17,34 +17,39 @@ AdjSurv.fn(
 )
 }
 \arguments{
-\item{taglife.file}{Optional. Name of .csv file with taglife times in 1st column.  other columns ignored.  Header expected.}
+\item{taglife.file}{Optional. Name of .csv file with taglife times in first column. Other columns ignored. Header expected.}
 
-\item{taghist.file}{Required. dataframe or a filename of .csv with detection histories. 2 formats currently supported.}
+\item{taghist.file}{Required. Dataframe or a filename of .csv file with detection histories.}
 
-\item{taghist.format}{Format of tag detection histories: "atlas" or"flat".
-"atlas" = format based on Program ATLAS input files. 8 columns.  Each tag has 1 line per possible detection site
-"flat" = format has 1 line per tag. tag.code, activation date, release date, and
-1 column per detection site filled with 1st detection times at that site (current format: "\%m/\%d/\%Y \%H:\%M")}
+\item{taghist.format}{Required. Format of tag detection histories
+\itemize{
+\item "atlas": format based on Program ATLAS input files. Eight columns. Each tag has one line per possible detection site.
+\item "flat":  format has one line per tag: tag.code, activation date, release date, and
+one column per detection site filled with first detection times at that site
+}}
 
-\item{taglife.model}{Failure time model obs (fc_obj)}
+\item{taglife.model}{Failure time model obs (fc_obj).}
 
-\item{num.release}{if more than 1 release group 1st column will be added to flat format file that will denote group name (currently not working)}
+\item{num.release}{If more than one release group, first column will be added to flat format file to denote group name (not implemented in this version).}
 
-\item{num.bootstrap}{number of resamples to estimate additional variance on survival estimates, default is 1000}
+\item{num.bootstrap}{Number of resamples to estimate additional variance on survival estimates, default is 1000.}
 
-\item{adjust.cjs}{Should CJS estimates be adjusted for estimated tag-life? Logical.}
+\item{adjust.cjs}{Logical (T|F) adjust CJS estimates for estimated tag-life.}
 
-\item{rounding}{Number of decimal places on estimates}
+\item{rounding}{Number of decimal places on estimates.}
 
-\item{plot.taglife}{plot the estimated tag-life curve. Logical.}
+\item{plot.taglife}{Logical (T|F) Plot the estimated tag-life curve.}
 }
 \value{
-Tables of estimates for unadjusted survival model and, if the taglife adjustment is used, taglife model estimates and adjusted survival estimates
+Output consists of a list of tables of the unadjusted survival model and, if the taglife adjustment is used, taglife model estimates and adjusted survival estimates.
 }
 \description{
-Analysis of release-recapture data from a study that uses active-tag technology.
-Estimates survival and detection probabilities, and if provided, the average probability
-a tag is active at each detection site.  These estimates are then used to adjust estimated survival for
-potential tag-failure that may be interpreted as mortality. Methods are documented in Program ATLAS 1.4:
-Active Tag Life Adjusted Survival (http://www.cbr.washington.edu/sites/default/files/manuals/ATLAS_1_4_Manual_0.pdf)
+This function analyzes release-recapture data from a study that uses active-tag technology.
+It then estimates survival and detection probabilities, and if provided, the average probability
+a tag is active at each detection site. These estimates are then used to adjust estimated survival for
+potential tag-failure that may be interpreted as mortality. Methods are documented in
+\href{http://www.cbr.washington.edu/sites/default/files/manuals/ATLAS_1_4_Manual_0.pdf}{Program ATLAS 1.4:Active Tag Life Adjusted Survival}
+}
+\details{
+all date-times are assumed to be character vector with format: "\%m/\%d/\%Y \%H:\%M"
 }

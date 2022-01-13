@@ -2,16 +2,16 @@
 % Please edit documentation in R/thist0.R
 \name{thist0}
 \alias{thist0}
-\title{Create a list with counts per history and vertical matrix of observed histories only}
+\title{Creates a list with counts per history and a vertical matrix of observed histories only.}
 \usage{
 thist0(x)
 }
 \arguments{
-\item{x}{detection history in wide ATlAS format, without rel.group or bin columns}
+\item{x}{Detection history in wide ATLAS format without rel.group or bin columns.}
 }
 \value{
-summary of counts.in per history and unique detection matrix in same order
+This function returns a summary of counts.in per history and unique detection matrix in the same order.
 }
 \description{
-Create a list with counts per history and vertical matrix of observed histories only
+Creates a list with counts per history and a vertical matrix of observed histories only.
 }

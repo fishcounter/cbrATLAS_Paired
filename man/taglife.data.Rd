@@ -3,7 +3,7 @@
 \docType{data}
 \name{taglife.data}
 \alias{taglife.data}
-\title{Taglife ATLAS Practice File}
+\title{Taglife ATLAS Practice File.}
 \format{
 A data frame with 1 columns and 100 rows:
 \describe{
@@ -15,6 +15,6 @@ A data frame with 1 columns and 100 rows:
 taglife.data
 }
 \description{
-Taglife ATLAS Practice File
+Taglife ATLAS Practice File.
 }
 \keyword{datasets}

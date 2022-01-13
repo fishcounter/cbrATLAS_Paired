@@ -2,20 +2,20 @@
 % Please edit documentation in R/mean_tt2site.fn.R
 \name{mean_tt2site.fn}
 \alias{mean_tt2site.fn}
-\title{Estimate harmonic mean of travel time from release to each detection site.}
+\title{Estimates harmonic mean of travel time from release to each detection site.}
 \usage{
 mean_tt2site.fn(data.in, num.period, site.names)
 }
 \arguments{
-\item{data.in}{detection history and detection times (flat format)}
+\item{data.in}{Detection history and detection times (flat format).}
 
-\item{num.period}{number of detection sites}
+\item{num.period}{Number of detection sites.}
 
-\item{site.names}{vector of site names}
+\item{site.names}{Vector of site names.}
 }
 \value{
-harmonic mean of travel time (days); tt.matrix: time of release to 1st detection time for each site (days); activetime.matrix: time of tag activation to 1st detection for each site (days)
+This function produces the harmonic mean of travel time (days); tt.matrix: time of release to first detection time for each site (days); activetime.matrix: time of tag activation to first detection for each site (days).
 }
 \description{
-Estimate harmonic mean of travel time from release to each detection site.
+Estimates harmonic mean of travel time from release to each detection site.
 }

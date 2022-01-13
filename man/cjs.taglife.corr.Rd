@@ -2,7 +2,7 @@
 % Please edit documentation in R/cjs.taglife.corr.R
 \name{cjs.taglife.corr}
 \alias{cjs.taglife.corr}
-\title{Estimate time tag active (tag activation to 1st detection time)}
+\title{Estimates the time a tag is active (tag activation to first detection time).}
 \usage{
 cjs.taglife.corr(
   activetime.matrix,
@@ -14,24 +14,24 @@ cjs.taglife.corr(
 )
 }
 \arguments{
-\item{activetime.matrix}{matrix of time elapsed after tag activation to 1st detection at site. 1 column per site}
+\item{activetime.matrix}{Matrix of time elapsed after tag activation to first detection at site. One column per site.}
 
-\item{site.names}{vector of site designations}
+\item{site.names}{Vector of site designations.}
 
-\item{num.period}{number of detection sites}
+\item{num.period}{Number of detection sites.}
 
-\item{taglife.fit}{results from fitting tag-life study tags. model name, estimated parameters, mean time to fail}
+\item{taglife.fit}{Results from fitting tag-life study tags: Model name, estimated parameters, mean time to fail.}
 
-\item{num.boots}{bootstrap for variance on estimated P(Li) for each site? Use 0 for initial fittings}
+\item{num.boots}{Bootstrap for variance on estimated P(Li) for each site? Uses 0 for initial fittings.}
 
-\item{cjs.est}{2-column matrix with unadjusted CJS estimates and standard errors}
+\item{cjs.est}{2-column Matrix with unadjusted Cormack-Jolly-Seber estimates and standard errors.}
 }
 \value{
-model.out  name of model fit to tag-life curve;L vector of P(Li); L.se matrix of 2 columns (L, L.se); boot.L.matrix matrix of P(Li) columns and num.boots rows using bootstrapped taglife values only.
+model.out  name of model fit to tag-life curve; L vector of P(Li); L.se matrix of 2 columns (L, L.se); boot.L.matrix matrix of P(Li) columns and num.boots rows using bootstrapped taglife values only.
 }
 \description{
 Uses the time a tag has been active to estimate the probability
-it would fail when detected.  The average P(failure) is estimated at
-each site.  The estimated survival is divided by the mean P(failure) at that
-site to adjust for the predicted tag failure in the study. (Townsend etal,  )
+it would fail when detected. The average P(failure) is estimated at
+each site. The estimated survival is divided by the mean P(failure) at that
+site to adjust for the predicted tag failure in the study. (Townsend et al.,  )
 }

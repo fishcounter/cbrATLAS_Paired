@@ -2,24 +2,25 @@
 % Please edit documentation in R/cjs.fn.R
 \name{cjs.fn}
 \alias{cjs.fn}
-\title{Summarize detection histories provide CJS estimates}
+\title{Summarizes detection histories and provides Cormack-Jolly-Seber estimates.}
 \usage{
 cjs.fn(detect.in, L.in = NULL, seeds.in = NULL, se.out = F, d = NULL)
 }
 \arguments{
-\item{detect.in}{Detection history in wide ATlAS format, w/o rel.group or bin columns}
+\item{detect.in}{Detection history in wide ATlAS format without rel.group or bin columns.}
 
-\item{L.in}{L.in: vector of mean probabilities tag is working, given detection at each site. If NULL function will estimate the CJS parameters w/o tag failure.}
+\item{L.in}{L.in: Vector of mean probabilities tag is working given detection at each site. If NULL, function will estimate the CJS parameters without tag failure.}
 
-\item{seeds.in}{optional starting estimates for CJS model parameters Si, pi, li where i is 1:(total number of sites-1)}
+\item{seeds.in}{Optional starting estimates for CJS model parameters Si, pi, li where i is 1:(total number of sites-1).}
 
-\item{se.out}{calculate se(cjs) from variance matrix of parameters using Hessian? Logical.}
+\item{se.out}{Calculate se(cjs) from variance matrix of parameters using Hessian? Logical.}
 
 \item{d}{proportion of detected tags censored at a location}
 }
 \value{
-2-column matrix with CJS estimates and standard errors (if estimated).
+Returns a two-column matrix with CJS estimates and standard errors (if estimated).
 }
 \description{
-CJS.fn summarizes the individual detection histories, estimates seeds for Cormack-Jolly-Seber likelhood fn
+CJS.fn summarizes the individual detection histories and estimates seeds for Cormack-Jolly-Seber likelhood fn. It is based on Skalski, J. R., S. G. Smith, R. N. Iwamoto, J. G. Williams, and A. Hoffmann. 1998. Use of passive integrated transponder tags to estimate survival of migrating juvenile salmonids in the Snake and Columbia Rivers. Canadian Journal of Fisheries and Aquatic Sciences 55:1484-1493.
+This likelihood is also used to adjust estimated tag life as described in Townsend, R. L., J. R. Skalski, P. Dillingham, and T. W. Steig. 2006. Correcting bias in survival estimation resulting from tag failure in acoustic and radiotelemetry studies.  Journal of Agricultural, Biological, and Environmental Statistics 11:183-196.
 }

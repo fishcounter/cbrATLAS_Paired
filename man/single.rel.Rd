@@ -3,7 +3,7 @@
 \docType{data}
 \name{single.rel}
 \alias{single.rel}
-\title{Single Release ATLAS Practice File}
+\title{Single Release ATLAS Practice File.}
 \format{
 A data frame with 8 columns and 9996 rows in the ATLAS file format:
 \describe{
@@ -22,6 +22,6 @@ A data frame with 8 columns and 9996 rows in the ATLAS file format:
 single.rel
 }
 \description{
-Single Release ATLAS Practice File
+Single Release ATLAS Practice File.
 }
 \keyword{datasets}
