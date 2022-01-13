@@ -1,4 +1,4 @@
-#' Single Release ATLAS Practice File
+#' Single Release ATLAS Practice File.
 #'
 #' @format A data frame with 8 columns and 9996 rows in the ATLAS file format:
 #' \describe{
@@ -14,7 +14,7 @@
 #' }
 "single.rel"
 
-#' Taglife ATLAS Practice File
+#' Taglife ATLAS Practice File.
 #'
 #' @format A data frame with 1 columns and 100 rows:
 #' \describe{

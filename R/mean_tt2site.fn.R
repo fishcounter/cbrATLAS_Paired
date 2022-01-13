@@ -1,10 +1,10 @@
-#' @title Estimate harmonic mean of travel time from release to each detection site.
+#' @title Estimates harmonic mean of travel time from release to each detection site.
 #'
-#' @param data.in detection history and detection times (flat format)
-#' @param num.period number of detection sites
-#' @param site.names vector of site names
+#' @param data.in Detection history and detection times (flat format).
+#' @param num.period Number of detection sites.
+#' @param site.names Vector of site names.
 #'
-#' @return  harmonic mean of travel time (days); tt.matrix: time of release to 1st detection time for each site (days); activetime.matrix: time of tag activation to 1st detection for each site (days)
+#' @return  This function produces the harmonic mean of travel time (days); tt.matrix: time of release to first detection time for each site (days); activetime.matrix: time of tag activation to first detection for each site (days).
 #'
 #' @export
 #'

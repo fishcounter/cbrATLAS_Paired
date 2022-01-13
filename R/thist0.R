@@ -1,8 +1,8 @@
-#' @title Create a list with counts per history and vertical matrix of observed histories only
+#' @title Creates a list with counts per history and a vertical matrix of observed histories only.
 #'
-#' @param x detection history in wide ATlAS format, without rel.group or bin columns
+#' @param x Detection history in wide ATLAS format without rel.group or bin columns.
 #'
-#' @return summary of counts.in per history and unique detection matrix in same order
+#' @return This function returns a summary of counts.in per history and unique detection matrix in the same order.
 #' @export
 #'
 thist0=function(x) {

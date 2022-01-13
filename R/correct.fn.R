@@ -1,12 +1,12 @@
-#' @title Restrain uncorrected probability estimates between 0 and 1
+#' @title Restrains uncorrected probability estimates between 0 and 1.
 #'
-#' @description The CJS likelihood estimates are currently bounded between 0 and
+#' @description The Cormack-Jolly-Seber (CJS) likelihood estimates are currently bounded between 0 and
 #' 1, which may bias survival estimates low in cases of low detection probability.
 #' This is not usually the case with active tag technology with typically high
-#' detection rates.  The CJS estimate may estimated greater than 100%, and this may
+#' detection rates. The CJS estimate may estimated greater than 100%, and this may
 #' be included in later iterations.
 #'
-#' @param x value to be rounded up to be between 0 to 1
+#' @param x Value to be rounded up to be between 0 to 1.
 #'
 #' @return rounded value
 #' @export

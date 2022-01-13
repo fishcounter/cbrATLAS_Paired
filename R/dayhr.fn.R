@@ -1,13 +1,13 @@
-#' @title Standardize date-times input
+#' @title Standardizes date-times input.
 #'
-#' @description Convert date-time into yyyy-mm-dd hh:mm:ss format
+#' @description This function converts date and time into a yyyy-mm-dd hh:mm:ss format.
 #'
-#' @param x character vector of date-time values
-#'		current accepted input formats: "m/%d/%Y %I:%M:%S %p"                                (AM/PM)
+#' @param x Character vector of date-time values
+#'		currently accepted as input formats include: "m/%d/%Y %I:%M:%S %p"                                (AM/PM)
 #'									    "%Y-%m-%d %H:%M:%S" or "%m/%d/%Y %H:%M:%S"    (with seconds)
 #'									    "Y-%m-%d %H:%M" or "%m/%d/%Y %H:%M"        (without seconds)
-#' @param secs are seconds included in time values. Logical
-#' @param AMPM is time format in AM, PM format. Logical
+#' @param secs Seconds included in time values. 
+#' @param AMPM Time format in AM/PM format.
 #'
 #' @return striptime object in "%Y-%m-%d %H:%M:%S" or "%Y-%m-%d %H:%M" format
 #'
