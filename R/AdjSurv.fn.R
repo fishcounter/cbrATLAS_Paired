@@ -15,7 +15,7 @@
 #'   \item{"flat"}{format has one line per tag: tag.code, activation date, release date, and
 #' 	          one column per detection site filled with first detection times at that site}
 #' }
-#' @param taglife.model fc_obj. Failure time model object.
+#' @param taglife.model fc_obj. Failure time model object. (default = NULL).  If no fc_obj is provided, function will try models available in failCompare and select best fit.
 #' @param num.release (default = 1) If more than one release group, first column will be added to flat format file to denote group name (not implemented in this version).
 #' @param num.bootstrap (default = 1000) Number of resample iterations to estimate additional variance on survival estimates.
 #' @param adjust.cjs (T|F) (default = T) adjust CJS estimates for estimated tag-life.

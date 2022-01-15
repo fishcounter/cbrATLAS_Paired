@@ -1,15 +1,15 @@
-#' @title Estimates harmonic mean of travel time from release to each detection site.
+#' @title Estimates travel time harmonic mean
 #'
-#' @param data.in Detection history and detection times (flat format).
+#' @param data.in Detection history and detection times (flat format)
 #' @param num.period Number of detection sites.
-#' @param site.names Vector of site names.
+#' @param site.names Vector of site names
 #'
 #' @return  This function returns a list with
 #' \describe{
 #'		\item{harmonic.tt}{harmonic mean travel time}
 #'		\item{tt.matrix}{individual travel time, release to first detection time for each site (days)}
 #'		\item{activetime.matrix}{individual time tag active, time of tag activation to first detection for each site (days)}
-#'
+#'}
 #' @export
 #'
 mean_tt2site.fn=function(data.in,num.period,site.names){

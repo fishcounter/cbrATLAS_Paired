@@ -28,7 +28,7 @@ AdjSurv.fn(
 one column per detection site filled with first detection times at that site}
 }}
 
-\item{taglife.model}{fc_obj. Failure time model object.}
+\item{taglife.model}{fc_obj. Failure time model object. (default = NULL).  If no fc_obj is provided, function will try models available in failCompare and select best fit.}
 
 \item{num.release}{(default = 1) If more than one release group, first column will be added to flat format file to denote group name (not implemented in this version).}
 

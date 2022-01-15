@@ -1,11 +1,11 @@
-#' @title Creates a list with counts per history and a vertical matrix of observed histories only.
+#' @title Creates a list with counts per history and corresponding matrix of unique histories
 #'
-#' @param x Detection history in wide ATLAS format without rel.group or bin columns.
+#' @param x Detection history in wide ATLAS format without rel.group or bin columns
 #'
 #' @return This function returns a list with
 #' \describe{
 #'    \item{count}{total counts in the same order as unique histories in hist.matrix}
-#'    \item{hist.matrix}{unique detection matrix, columns indicate detection site. (0= not detected/1=detected)
+#'    \item{hist.matrix}{unique detection matrix, columns indicate detection site. (0=not detected/1=detected)}
 #' }
 #'
 #' @export
