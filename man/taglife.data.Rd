@@ -7,8 +7,7 @@
 \format{
 A data frame with 1 columns and 100 rows:
 \describe{
-\item{tag_life_days}{length of time from activation to tag failure in days}
-...
+\item{tag_life_days}{length of time from activation to tag failure in days.}
 }
 }
 \usage{

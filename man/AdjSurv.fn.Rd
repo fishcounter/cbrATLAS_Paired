@@ -17,9 +17,9 @@ AdjSurv.fn(
 )
 }
 \arguments{
-\item{taglife.file}{Optional. Name of .csv file with taglife times in first column. Other columns ignored. Header expected.}
+\item{taglife.file}{Optional. Name of .csv file with taglife times in first column. Other columns ignored. Header expected}
 
-\item{taghist.file}{Required. Dataframe or a filename of .csv file with detection histories.}
+\item{taghist.file}{Required. Dataframe or a filename of .csv file with detection histories}
 
 \item{taghist.format}{Required. Format of tag detection histories
 \describe{
@@ -28,20 +28,20 @@ AdjSurv.fn(
 one column per detection site filled with first detection times at that site}
 }}
 
-\item{taglife.model}{fc_obj. Failure time model object. (default = NULL).  If no fc_obj is provided, function will try models available in failCompare and select best fit.}
+\item{taglife.model}{fc_obj. Failure time model object. (default = NULL).  If no fc_obj is provided, function will try models available in failCompare and select best fit}
 
-\item{num.release}{(default = 1) If more than one release group, first column will be added to flat format file to denote group name (not implemented in this version).}
+\item{num.release}{(default = 1) If more than one release group, first column will be added to flat format file to denote group name (not implemented in this version)}
 
-\item{num.bootstrap}{(default = 1000) Number of resample iterations to estimate additional variance on survival estimates.}
+\item{num.bootstrap}{(default = 1000) Number of resample iterations to estimate additional variance on survival estimates}
 
-\item{adjust.cjs}{(T|F) (default = T) adjust CJS estimates for estimated tag-life.}
+\item{adjust.cjs}{(T|F) (default = T) adjust CJS estimates for estimated tag-life}
 
-\item{rounding}{(default = 4)  Number of decimal places on estimate.}
+\item{rounding}{(default = 4)  Number of decimal places on estimate}
 
-\item{plot.taglife}{(T|F) (default = T) Plot the estimated tag-life curve.}
+\item{plot.taglife}{(T|F) (default = T) Plot the estimated tag-life curve}
 }
 \value{
-Returns a list "Out" with (if provided)
+Returns a list "Out" with (if provided):
 \describe{
 \item{taghist}{tagfile filename}
 \item{unadjusted.cjs}{table of unadjusted survival estimates}
@@ -53,10 +53,10 @@ Returns a list "Out" with (if provided)
 }
 \description{
 This function analyzes release-recapture data from a study that uses active-tag technology.
-It then estimates survival and detection probabilities, and if provided, the average probability
+It then estimates survival and detection probabilities and, if provided, the average probability
 a tag is active at each detection site. These estimates are then used to adjust estimated survival for
 potential tag-failure that may be interpreted as mortality. Methods are documented in
-\href{http://www.cbr.washington.edu/sites/default/files/manuals/ATLAS_1_4_Manual_0.pdf}{Program ATLAS 1.4:Active Tag Life Adjusted Survival}
+\href{http://www.cbr.washington.edu/sites/default/files/manuals/ATLAS_1_4_Manual_0.pdf}{Program ATLAS 1.4:Active Tag Life Adjusted Survival}.
 }
 \details{
 All date-times are assumed to be character vector with format: "\%m/\%d/\%Y \%H:\%M"

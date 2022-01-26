@@ -2,26 +2,26 @@
 % Please edit documentation in R/cjs.lik.R
 \name{cjs.lik}
 \alias{cjs.lik}
-\title{A likelihood function for unadjusted- or adjusted-for-taglife Cormack-Jolly-Seber estimates.}
+\title{A likelihood function for unadjusted- or adjusted-for-taglife Cormack-Jolly-Seber (CJS) estimates}
 \usage{
 cjs.lik(params, counts.in, num.period, use.hist, L.in = NULL, d.in = NULL)
 }
 \arguments{
-\item{params}{The likelihood MLE estimators (S,p,l) in a single vector.}
+\item{params}{The likelihood MLE estimators (S,p,l) in a single vector}
 
-\item{counts.in}{Vector of summed detections by history (names are history).}
+\item{counts.in}{Vector of summed detections by history (names are history)}
 
-\item{num.period}{Number of detection periods in history.}
+\item{num.period}{Number of detection periods in history}
 
-\item{use.hist}{Matrix of unique detection histories.}
+\item{use.hist}{Matrix of unique detection histories}
 
-\item{L.in}{The probability that a tag is working at a detection site at a given time. Set to 1 if active tags not indicated. p(tag working) is cumulative to each site, not a multiplicate from site to site.}
+\item{L.in}{The probability that a tag is working at a detection site at a given time. Set to 1 if active tags not indicated. p(tag working) is cumulative to each site, not a multiplicate from site to site}
 
-\item{d.in}{The probability a tag is censored given that it's detected.}
+\item{d.in}{The probability a tag is censored given that it's detected}
 }
 \value{
-This function returns a negative log-likelihood.
+This function returns a negative log-likelihood
 }
 \description{
-A likelihood function for unadjusted- or adjusted-for-taglife Cormack-Jolly-Seber estimates.
+This is a likelihood function for unadjusted- or adjusted-for-taglife Cormack-Jolly-Seber (CJS) estimates.
 }

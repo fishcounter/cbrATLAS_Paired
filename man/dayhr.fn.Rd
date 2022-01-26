@@ -2,28 +2,29 @@
 % Please edit documentation in R/dayhr.fn.R
 \name{dayhr.fn}
 \alias{dayhr.fn}
-\title{Standardizes date-times input.}
+\title{Standardizes date-times input}
 \usage{
 dayhr.fn(x, secs = T, AMPM = F)
 }
 \arguments{
-\item{x}{Character vector of date-time values
-currently accepted as input formats include: "m/\%d/\%Y \%I:\%M:\%S \%p"                                (AM/PM)
-"\%Y-\%m-\%d \%H:\%M:\%S" or "\%m/\%d/\%Y \%H:\%M:\%S"    (with seconds)
-"Y-\%m-\%d \%H:\%M" or "\%m/\%d/\%Y \%H:\%M"        (without seconds)}
+\item{x}{Character vector of date-time values currently accepted as input formats
+\describe{
+\item{"m/d/Y I:M:S p"}{AM/PM}
+\item{"Y-m-d H:M:S" or "m/d/Y H:M:S"}{with seconds}
+\item{"Y-m-d H:M" or "m/d/Y H:M"}{without seconds}
+}}
 
-\item{secs}{Seconds included in time values.}
+\item{secs}{(T|F) Seconds are included in time values}
 
-\item{AMPM}{Time format in AM/PM format.}
+\item{AMPM}{(T|F) Time format is in AM/PM format}
 }
 \value{
-striptime object in "\%Y-\%m-\%d \%H:\%M:\%S" or "\%Y-\%m-\%d \%H:\%M" format
+Returns a strptime object in "\%Y-\%m-\%d \%H:\%M:\%S" or "\%Y-\%m-\%d \%H:\%M" format
 }
 \description{
-This function converts date and time into a yyyy-mm-dd hh:mm:ss format.
+This function converts date and time into a "yyyy-mm-dd hh:mm:ss" format.
 }
 \examples{
-\dontrun{
-dayhr.fn("2021-05-10 14:22:34", secs =T , AMPM = F)
-}
+\dontrun{dayhr.fn("2021-05-10 14:22:34", secs=T , AMPM = F)}
+
 }

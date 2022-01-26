@@ -2,7 +2,7 @@
 % Please edit documentation in R/atlas2flat.fn.R
 \name{atlas2flat.fn}
 \alias{atlas2flat.fn}
-\title{Converts ATLAS data file to a flat file format.}
+\title{Converts ATLAS data file to a flat file format}
 \usage{
 atlas2flat.fn(data.in)
 }
@@ -10,10 +10,10 @@ atlas2flat.fn(data.in)
 \item{data.in}{Table: columns = release group name, bin number, tag id, tag activation date/time, tag release date/time, site name, detection (1 = yes, 0 = no), detection date/time}
 }
 \value{
-Creates a table with columns: release group name, bin number, tag id, activation date/time, tag release date/time, 1 column per site name with detection time (blank if no detection)
+Returns a table with columns: release group name, bin number, tag id, activation date/time, tag release date/time, one column per site name with detection time (blank if no detection)
 }
 \description{
 The ATLAS file format (detailed in the ATLAS 1.4 manual, page 17) is a vertical file
-with one line per detection site.  The input format for the cbrATLAS uses a flat file format, which details
-the history of eacg tag on one line, including release and dection times at each site.
+with one line per detection site. The input format for the cbrATLAS package uses a flat file format, which details
+the history of each tag on one line, including release and detection times at each site.
 }

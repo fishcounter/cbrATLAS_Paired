@@ -2,7 +2,7 @@
 % Please edit documentation in R/harmonic.R
 \name{harmonic}
 \alias{harmonic}
-\title{Estimates harmonic mean.}
+\title{Estimates harmonic mean}
 \usage{
 harmonic(t.in)
 }
@@ -10,8 +10,8 @@ harmonic(t.in)
 \item{t.in}{Numeric vector (no NAs).}
 }
 \value{
-This function returns a character vector of harmonic mean and standard error.
+This function returns a character vector of harmonic mean and standard error
 }
 \description{
-Estimates harmonic mean.
+This function estimates harmonic mean.
 }

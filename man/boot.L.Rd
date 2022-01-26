@@ -2,22 +2,26 @@
 % Please edit documentation in R/boot.L.R
 \name{boot.L}
 \alias{boot.L}
-\title{Bootstraps "activation to 1st detection per site" to get standard errors on estimated p(Li)}
+\title{Bootstraps observed "activation to 1st detection per site" times to get standard errors on estimated p(Li)}
 \usage{
-boot.L(at.time.matrix, model.in, num.boots)
+boot.L(at.time.matrix, model.in, num.boots = 100)
 }
 \arguments{
-\item{at.time.matrix}{Matrix of time from activation to detection at site i.}
+\item{at.time.matrix}{Matrix of time from activation to detection at site i}
 
-\item{model.in}{Output from taglife.fn.}
+\item{model.in}{Output from taglife.fn}
 
-\item{num.boots}{Number of desired resampling bootstraps to estimate the standard error for each taglife estimate.}
+\item{num.boots}{(default = 100) Number of desired resampling bootstraps to estimate the standard error for each taglife estimate}
 }
 \value{
-Creates a list of L.matrix matrix of bootstrapped Li w/resampled taglife tags; L2.matrix matrix of bootstrapped Li w/resampled taglife tags and active times to detection.
+Returns a list called L.matrix that contains:
+\describe{
+\item{L.matrix}{means from bootstrapping that is used to correct survival}
+\item{L2.matrix}{matrix of bootstrapped Li w/resampled taglife tags and active times to detection}
+}
 }
 \description{
 To better estimate the variance on the adjusted-for-tag-failure survival estimates,
-a bootstrap is conducted on both the data used estimate tag-life and on the observed times the study tags were active.
+a bootstrap is conducted on both the data used to estimate tag-life and on the observed times the study tags were active.
 Statistical methods are described in the ATLAS 1.4 manual, Appendix B2.
 }
