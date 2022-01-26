@@ -72,12 +72,7 @@ AdjSurv.fn=function (taglife.file=NULL, taghist.file,taghist.format="atlas", tag
     unadj.cjs.params=cjs.fn(detect.in=detects,se.out=T)
 
     if(!is.null(taglife.file)){
-      fc.loaded=require(failCompare)
-      if(!fc.loaded){
-        current.fc="http://www.cbr.washington.edu/sites/default/files/dists/failCompare_1.0.0.zip"
-        install.packages(current.fc)
-        }
-    ################################################### Estimate tag-life curve
+     ################################################### Estimate tag-life curve
       if(is.null(taglife.model)){
         mod_ls=failCompare::fc_fit(time=taglife.file$tag_life_days,model=c('weibull','weibull3','gompertz','gamma','lognormal','llogis','gengamma'))
         mod_ls_ranked=failCompare::fc_rank(mod_ls)
