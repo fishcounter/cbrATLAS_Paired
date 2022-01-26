@@ -1,20 +1,20 @@
-#' @title Estimates the time a tag is active (tag activation to first detection time).
+#' @title Estimates the time a tag is active (tag activation to first detection time)
 #'
-#' @description Uses the time a tag has been active to estimate the probability
+#' @description This function uses the time a tag has been active to estimate the probability
 #' it would fail when detected. The average P(failure) is estimated at
 #' each site. The estimated survival is divided by the mean P(failure) at that
-#' site to adjust for the predicted tag failure in the study. (Townsend et al., 2006)
+#' site to adjust for the predicted tag failure in the study (Townsend et al. 2006).
 #'
-#' @param activetime.matrix Matrix of time elapsed after tag activation to first detection at site. One column per site.
-#' @param site.names Vector of site designations.
-#' @param num.period Number of detection sites.
-#' @param taglife.fit Results from fitting tag-life study tags: Model name, estimated parameters, mean time to fail.
-#' @param num.boots Number of Bootstrap interations for variance on estimated P(Li) for each site. Uses 0 for initial fittings.
-#' @param cjs.est 2-column Matrix with unadjusted Cormack-Jolly-Seber estimates and standard errors.
+#' @param activetime.matrix Matrix of time elapsed after tag activation to first detection at site. One column per site
+#' @param site.names Vector of site designations
+#' @param num.period Number of detection sites
+#' @param taglife.fit Results from fitting tag-life study tags: Model name, estimated parameters, mean time to fail
+#' @param num.boots Number of Bootstrap interations for variance on estimated P(Li) for each site. Uses 0 for initial fittings
+#' @param cjs.est 2-column Matrix with unadjusted Cormack-Jolly-Seber estimates and standard errors
 #'
 #' @importFrom failCompare fc_pred
 #'
-#' @return returns a list with
+#' @return returns a list with:
 #' \describe{
 #'    \item{model.out}{name of model used to fit tag-life curve}
 #'    \item{L}{vector of probabilty tag active to each detection site}

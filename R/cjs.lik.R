@@ -1,13 +1,15 @@
-#' @title A likelihood function for unadjusted- or adjusted-for-taglife Cormack-Jolly-Seber estimates.
+#' @title A likelihood function for unadjusted- or adjusted-for-taglife Cormack-Jolly-Seber (CJS) estimates
 #'
-#' @param params The likelihood MLE estimators (S,p,l) in a single vector.
-#' @param counts.in Vector of summed detections by history (names are history).
-#' @param num.period Number of detection periods in history.
-#' @param use.hist Matrix of unique detection histories.
-#' @param L.in The probability that a tag is working at a detection site at a given time. Set to 1 if active tags not indicated. p(tag working) is cumulative to each site, not a multiplicate from site to site.
-#' @param d.in The probability a tag is censored given that it's detected.
+#' @description This is a likelihood function for unadjusted- or adjusted-for-taglife Cormack-Jolly-Seber (CJS) estimates.
 #'
-#' @return This function returns a negative log-likelihood.
+#' @param params The likelihood MLE estimators (S,p,l) in a single vector
+#' @param counts.in Vector of summed detections by history (names are history)
+#' @param num.period Number of detection periods in history
+#' @param use.hist Matrix of unique detection histories
+#' @param L.in The probability that a tag is working at a detection site at a given time. Set to 1 if active tags not indicated. p(tag working) is cumulative to each site, not a multiplicate from site to site
+#' @param d.in The probability a tag is censored given that it's detected
+#'
+#' @return This function returns a negative log-likelihood
 #' @export
 #'
 cjs.lik=function(params,counts.in,num.period,use.hist,L.in=NULL,d.in=NULL){

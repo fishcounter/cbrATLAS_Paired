@@ -8,8 +8,8 @@
 #'	  \item{"Y-m-d H:M:S" or "m/d/Y H:M:S"}{with seconds}
 #'	  \item{"Y-m-d H:M" or "m/d/Y H:M"}{without seconds}
 #' }
-#' @param secs (T|F) Seconds are included in time values.
-#' @param AMPM (T|F) Time format is in AM/PM format.
+#' @param secs (T|F) Seconds are included in time values
+#' @param AMPM (T|F) Time format is in AM/PM format
 #'
 #' @return Returns a strptime object in "%Y-%m-%d %H:%M:%S" or "%Y-%m-%d %H:%M" format
 #'
@@ -29,7 +29,8 @@ dayhr.fn=function(x,secs=T,AMPM=F){
 			if(sum(is.na(strptime(x,format="%Y-%m-%d %H:%M")))==length(x)){out=strptime(x,format="%m/%d/%Y %H:%M")}else{
 			out=strptime(x,format="%Y-%m-%d %H:%M")}
 		}
-  stopifnot('Time format in detection history is not correct'=sum(is.na(out))==length(x))
+
+  stopifnot('Time format in detection history is not correct'=sum(is.na(out))<length(x))
   return(out)
 	}
 

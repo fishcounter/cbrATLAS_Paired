@@ -1,6 +1,6 @@
 Package: cbrATLAS
 Title: Active Tag-Life-Adjusted Survival Modeling
-Version: 0.0.0.9003
+Version: 0.0.0.9100
 Authors@R: c(
     person(given = "Richard L.",
            family = "Townsend",
@@ -17,7 +17,7 @@ Authors@R: c(
 Description: ATLAS is based on a the stand-alone program provided by Columbia 
     Basin Research (University of Washington) to analyze active tag mark-
     recapture studies.  The use of an active tag increases subsequent detetion 
-    probabilities, but relies on a signal that may fail due to battery or 
+    probabilities but relies on a signal that may fail due to battery or 
     equipment failure.  Without adjusting for this probability, estimated 
     survival will be under-estimated.  Though reliant on having a tag-life study 
     from representative samples of tags used in the study, the method in this 

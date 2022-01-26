@@ -1,19 +1,19 @@
 #' @title Bootstraps observed "activation to 1st detection per site" times to get standard errors on estimated p(Li)
 #'
 #' @description To better estimate the variance on the adjusted-for-tag-failure survival estimates,
-#' a bootstrap is conducted on both the data used estimate tag-life and on the observed times the study tags were active.
+#' a bootstrap is conducted on both the data used to estimate tag-life and on the observed times the study tags were active.
 #' Statistical methods are described in the ATLAS 1.4 manual, Appendix B2.
 #'
-#' @param at.time.matrix Matrix of time from activation to detection at site i.
-#' @param model.in Output from taglife.fn.
-#' @param num.boots (default = 100) Number of desired resampling bootstraps to estimate the standard error for each taglife estimate.
+#' @param at.time.matrix Matrix of time from activation to detection at site i
+#' @param model.in Output from taglife.fn
+#' @param num.boots (default = 100) Number of desired resampling bootstraps to estimate the standard error for each taglife estimate
 #'
 #' @import failCompare
 #'
-#' @return Returns a list called L.matrix that contains
+#' @return Returns a list called L.matrix that contains:
 #' \describe{
-#'     \item{L.matrix}{means from bootstrapping that is used to correct survival.}
-#'     \item{L2.matrix}{matrix of bootstrapped Li w/resampled taglife tags and active times to detection.}
+#'     \item{L.matrix}{means from bootstrapping that is used to correct survival}
+#'     \item{L2.matrix}{matrix of bootstrapped Li w/resampled taglife tags and active times to detection}
 #'     }
 #' @export
 #'

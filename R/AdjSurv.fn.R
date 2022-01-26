@@ -2,29 +2,29 @@
 #' @title Active Tag-Life-Adjusted Survival Modeling Fitting
 #'
 #' @description This function analyzes release-recapture data from a study that uses active-tag technology.
-#' It then estimates survival and detection probabilities, and if provided, the average probability
+#' It then estimates survival and detection probabilities and, if provided, the average probability
 #' a tag is active at each detection site. These estimates are then used to adjust estimated survival for
 #' potential tag-failure that may be interpreted as mortality. Methods are documented in
-#' \href{http://www.cbr.washington.edu/sites/default/files/manuals/ATLAS_1_4_Manual_0.pdf}{Program ATLAS 1.4:Active Tag Life Adjusted Survival}
+#' \href{http://www.cbr.washington.edu/sites/default/files/manuals/ATLAS_1_4_Manual_0.pdf}{Program ATLAS 1.4:Active Tag Life Adjusted Survival}.
 #'
-#' @param taglife.file Optional. Name of .csv file with taglife times in first column. Other columns ignored. Header expected.
-#' @param taghist.file  Required. Dataframe or a filename of .csv file with detection histories.
+#' @param taglife.file Optional. Name of .csv file with taglife times in first column. Other columns ignored. Header expected
+#' @param taghist.file  Required. Dataframe or a filename of .csv file with detection histories
 #' @param taghist.format Required. Format of tag detection histories
 #' \describe{
 #'   \item{"atlas"}{format based on Program ATLAS input files. Eight columns. Each tag has one line per possible detection site.}
 #'   \item{"flat"}{format has one line per tag: tag.code, activation date, release date, and
 #' 	          one column per detection site filled with first detection times at that site}
 #' }
-#' @param taglife.model fc_obj. Failure time model object. (default = NULL).  If no fc_obj is provided, function will try models available in failCompare and select best fit.
-#' @param num.release (default = 1) If more than one release group, first column will be added to flat format file to denote group name (not implemented in this version).
-#' @param num.bootstrap (default = 1000) Number of resample iterations to estimate additional variance on survival estimates.
-#' @param adjust.cjs (T|F) (default = T) adjust CJS estimates for estimated tag-life.
-#' @param rounding  (default = 4)  Number of decimal places on estimate.
-#' @param plot.taglife (T|F) (default = T) Plot the estimated tag-life curve.
+#' @param taglife.model fc_obj. Failure time model object. (default = NULL).  If no fc_obj is provided, function will try models available in failCompare and select best fit
+#' @param num.release (default = 1) If more than one release group, first column will be added to flat format file to denote group name (not implemented in this version)
+#' @param num.bootstrap (default = 1000) Number of resample iterations to estimate additional variance on survival estimates
+#' @param adjust.cjs (T|F) (default = T) adjust CJS estimates for estimated tag-life
+#' @param rounding  (default = 4)  Number of decimal places on estimate
+#' @param plot.taglife (T|F) (default = T) Plot the estimated tag-life curve
 #'
 #' @importFrom failCompare fc_fit fc_rank fc_select
 #'
-#' @return Returns a list "Out" with (if provided)
+#' @return Returns a list "Out" with (if provided):
 #' \describe{
 #'   \item{taghist}{tagfile filename}
 #'   \item{unadjusted.cjs}{table of unadjusted survival estimates}

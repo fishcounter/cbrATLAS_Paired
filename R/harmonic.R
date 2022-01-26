@@ -1,8 +1,10 @@
-#' @title Estimates harmonic mean.
+#' @title Estimates harmonic mean
+#'
+#' @description This function estimates harmonic mean.
 #'
 #' @param t.in Numeric vector (no NAs).
 #'
-#' @return This function returns a character vector of harmonic mean and standard error.
+#' @return This function returns a character vector of harmonic mean and standard error
 #'
 #' @export
 #'
