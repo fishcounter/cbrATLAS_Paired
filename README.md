@@ -1,4 +1,4 @@
-# ATLAS
+# cbrATLAS
 The original ATLAS program (http://www.cbr.washington.edu/analysis/apps/atlas) provides the ability to
 analyze mark-recapture data that used active-tag technology, and to adjust the observed survival estimates
 for potential tag-failure that may be misidentified as a mortality of the marked animal. The cbrATLAS R
