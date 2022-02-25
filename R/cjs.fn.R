@@ -1,7 +1,7 @@
 #' @title  Summarizes detection histories and provides Cormack-Jolly-Seber estimates without or without adjustment of potential tag-failure
 #'
-#' @description CJS.fn summarizes the individual detection histories and estimates seeds for Cormack-Jolly-Seber (CJS) likelhood function. It is based on Skalski, J. R., S. G. Smith, R. N. Iwamoto, J. G. Williams, and A. Hoffmann. 1998. Use of passive integrated transponder tags to estimate survival of migrating juvenile salmonids in the Snake and Columbia Rivers. Canadian Journal of Fisheries and Aquatic Sciences 55:1484-1493.
-#'  This likelihood is also used to adjust survival for estimated tag life as described in Townsend, R. L., J. R. Skalski, P. Dillingham, and T. W. Steig. 2006. Correcting bias in survival estimation resulting from tag failure in acoustic and radiotelemetry studies.  Journal of Agricultural, Biological, and Environmental Statistics 11:183-196.
+#' @description CJS.fn summarizes the individual detection histories and estimates seeds for Cormack-Jolly-Seber (CJS) likelhood function. It is based on Skalski et al. (1998).
+#' This likelihood is also used to adjust survival for estimated tag life as described in Townsend et al. (2006).
 #'
 #' @param detect.in Detection history in wide ATLAS format without rel.group or bin columns
 #' @param L.in L.in: Vector of mean probabilities tag is working given detection at each site. If NULL, function will estimate the CJS parameters without tag failure

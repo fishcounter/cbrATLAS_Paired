@@ -53,9 +53,9 @@ Returns a list "Out" with (if provided):
 }
 \description{
 This function analyzes release-recapture data from a study that uses active-tag technology.
-It then estimates survival and detection probabilities and, if provided, the average probability
+It estimates survival and detection probabilities and, if provided with tag-life data, the average probability
 a tag is active at each detection site. These estimates are then used to adjust estimated survival for
-potential tag-failure that may be interpreted as mortality. Methods are documented in
+potential tag-failure that may otherwise be interpreted as mortality. Methods are documented in
 \href{http://www.cbr.washington.edu/sites/default/files/manuals/ATLAS_1_4_Manual_0.pdf}{Program ATLAS 1.4:Active Tag Life Adjusted Survival}.
 }
 \details{

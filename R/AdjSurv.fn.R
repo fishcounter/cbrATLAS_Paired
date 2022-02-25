@@ -2,9 +2,9 @@
 #' @title Active Tag-Life-Adjusted Survival Modeling Fitting
 #'
 #' @description This function analyzes release-recapture data from a study that uses active-tag technology.
-#' It then estimates survival and detection probabilities and, if provided, the average probability
+#' It estimates survival and detection probabilities and, if provided with tag-life data, the average probability
 #' a tag is active at each detection site. These estimates are then used to adjust estimated survival for
-#' potential tag-failure that may be interpreted as mortality. Methods are documented in
+#' potential tag-failure that may otherwise be interpreted as mortality. Methods are documented in
 #' \href{http://www.cbr.washington.edu/sites/default/files/manuals/ATLAS_1_4_Manual_0.pdf}{Program ATLAS 1.4:Active Tag Life Adjusted Survival}.
 #'
 #' @param taglife.file Optional. Name of .csv file with taglife times in first column. Other columns ignored. Header expected
@@ -23,6 +23,7 @@
 #' @param plot.taglife (T|F) (default = T) Plot the estimated tag-life curve
 #'
 #' @importFrom failCompare fc_fit fc_rank fc_select
+#' @importFrom utils installed.packages packageVersion
 #'
 #' @return Returns a list "Out" with (if provided):
 #' \describe{
@@ -72,16 +73,19 @@ AdjSurv.fn=function (taglife.file=NULL, taghist.file,taghist.format="atlas", tag
     unadj.cjs.params=cjs.fn(detect.in=detects,se.out=T)
 
     if(!is.null(taglife.file)){
+		  fc.loaded=("failCompare" %in% installed.packages())
+		  fc.up2date=!(packageVersion("failCompare")<"1.0.0") #check if fc pkg up to date
+		if((!fc.up2date)|(!fc.loaded)){print("Please download the latest version of the failCompare pkg at http://www.cbr.washington.edu/analysis/apps/failcompare/")}
      ################################################### Estimate tag-life curve
-      if(is.null(taglife.model)){
-        mod_ls=failCompare::fc_fit(time=taglife.file$tag_life_days,model=c('weibull','weibull3','gompertz','gamma','lognormal','llogis','gengamma'))
-        mod_ls_ranked=failCompare::fc_rank(mod_ls)
+		if(is.null(taglife.model)){
+	    mod_ls=failCompare::fc_fit(time=taglife.file$tag_life_days,model=c('weibull','weibull3','gompertz','gamma','lognormal','llogis','gengamma'))
+			mod_ls_ranked=failCompare::fc_rank(mod_ls)
 
-        # currently, select best-fitting model automatically
-        taglife.fit=failCompare::fc_select(mod_ls_ranked,model = as.character(mod_ls_ranked$"GOF_tab"[1,1]))
-      }else{taglife.fit=taglife.model}
+			# currently, select best-fitting model automatically
+			taglife.fit=failCompare::fc_select(mod_ls_ranked,model = as.character(mod_ls_ranked$"GOF_tab"[1,1]))
+			}else{taglife.fit=taglife.model}
 
-      if(plot.taglife){plot(taglife.fit)}
+		if(plot.taglife){plot(taglife.fit)}
 
       ########### Estimate mean travel time to each site, use to calculate mean failure at each site
       tt.rel2site=mean_tt2site.fn(data.in,num.period,site.names)
