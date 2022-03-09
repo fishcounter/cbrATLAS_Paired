@@ -1,6 +1,6 @@
 Package: cbrATLAS
 Title: Active Tag Life Adjusted Survival Modeling
-Version: 0.0.1.1
+Version: 0.0.1.2
 Authors@R: c(
     person(given = "Richard L.",
            family = "Townsend",
@@ -35,4 +35,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-
+Additional_repositories: https://github.com/Columbia-Basin-Research-West/failCompare
