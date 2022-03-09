@@ -1,10 +1,11 @@
 #' @title Restrains uncorrected probability estimates between 0 and 1
 #'
-#' @description The Cormack-Jolly-Seber (CJS) likelihood estimates are currently bounded between 0 and
-#' 1, which may bias survival estimates low in cases of low detection probability.
-#' This is not usually the case with active tag technology with typically high
-#' detection rates. The CJS estimate can be greater than 100%, and this may
-#' be included in later iterations.
+#' @description Estimation of Cormack-Jolly-Seber (CJS) survival parameters can
+#'   be greater than 1 when detection probabilities are low. To reduce computational
+#'   failure when maximizing the likelihood, correct.fn bounds the CJS parameter
+#'   estimates between 0 and 1 in the likelihood.  This may result in survival
+#'   estimates biased low, but low detection rates do not usually occur in studies
+#'   with active tag technology.
 #'
 #' @param x Value to be rounded up/down to be between 0 to 1
 #'

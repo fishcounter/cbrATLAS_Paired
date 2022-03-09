@@ -1,15 +1,25 @@
-#' @title  Summarizes detection histories and provides Cormack-Jolly-Seber estimates without or without adjustment of potential tag-failure
+#' @title  Summarizes detection histories and provides Cormack-Jolly-Seber
+#' estimates with or without adjustment of potential tag-failure
 #'
-#' @description CJS.fn summarizes the individual detection histories and estimates seeds for Cormack-Jolly-Seber (CJS) likelhood function. It is based on Skalski et al. (1998).
-#' This likelihood is also used to adjust survival for estimated tag life as described in Townsend et al. (2006).
+#' @description CJS.fn summarizes the individual detection histories and
+#' estimates seeds for Cormack-Jolly-Seber (CJS) likelhood function. It is based
+#' on Skalski et al. (1998). This likelihood is also used to adjust survival for
+#' estimated tag life as described in Townsend et al. (2006).  If not tag life
+#' data provided, only the unadjusted CJS survival will be returned.
 #'
-#' @param detect.in Detection history in wide ATLAS format without rel.group or bin columns
-#' @param L.in L.in: Vector of mean probabilities tag is working given detection at each site. If NULL, function will estimate the CJS parameters without tag failure
-#' @param seeds.in Optional starting estimates for CJS model parameters Si, pi, li where i is 1:(total number of sites-1)
-#' @param se.out (T|F) Should standard error of cjs parameters be estimated.  Uses variance matrix based on Hessian from MLE of cjs likelihood
+#' @param detect.in Detection history in wide ATLAS format without rel.group or
+#' bin columns
+#' @param L.in L.in: Vector of mean probabilities tag is working given detection
+#' at each site. If NULL, function will estimate the CJS parameters without tag
+#' failure
+#' @param seeds.in Optional starting estimates for CJS model parameters Si, pi,
+#' li where i is 1:(total number of sites-1)
+#' @param se.out (T|F) Should standard error of cjs parameters be estimated.
+#' Uses variance matrix based on Hessian from MLE of cjs likelihood
 #' @param d proportion of detected tags censored at a location
 #'
-#' @return Returns a two-column matrix with CJS estimates and standard errors (if estimated)
+#' @return Returns a two-column matrix with CJS estimates and standard errors
+#' (if estimated)
 #' @export
 #'
 cjs.fn=function(detect.in,L.in=NULL,seeds.in=NULL,se.out=F,d=NULL){

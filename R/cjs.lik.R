@@ -1,6 +1,9 @@
 #' @title A likelihood function for unadjusted- or adjusted-for-taglife Cormack-Jolly-Seber (CJS) estimates
 #'
-#' @description This is a likelihood function for unadjusted- or adjusted-for-taglife Cormack-Jolly-Seber (CJS) estimates.
+#' @description This is a likelihood function for unadjusted- or adjusted-for-taglife
+#'  Cormack-Jolly-Seber (CJS) estimates.  It is based on Skalski et al. (1998).
+#'  Adjustment to survival for estimated tag life as described in Townsend et al.
+#'  (2006).
 #'
 #' @param params The likelihood MLE estimators (S,p,l) in a single vector
 #' @param counts.in Vector of summed detections by history (names are history)

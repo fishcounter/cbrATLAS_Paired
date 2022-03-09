@@ -23,5 +23,8 @@ cjs.lik(params, counts.in, num.period, use.hist, L.in = NULL, d.in = NULL)
 This function returns a negative log-likelihood
 }
 \description{
-This is a likelihood function for unadjusted- or adjusted-for-taglife Cormack-Jolly-Seber (CJS) estimates.
+This is a likelihood function for unadjusted- or adjusted-for-taglife
+Cormack-Jolly-Seber (CJS) estimates.  It is based on Skalski et al. (1998).
+Adjustment to survival for estimated tag life as described in Townsend et al.
+(2006).
 }

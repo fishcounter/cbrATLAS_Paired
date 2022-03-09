@@ -1,4 +1,4 @@
-#' @title Standardizes date-times input
+#' @title Standardizes date-time input
 #'
 #' @description This function converts date and time into a "yyyy-mm-dd hh:mm:ss" format.
 #'

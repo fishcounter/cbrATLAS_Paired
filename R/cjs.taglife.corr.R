@@ -1,9 +1,10 @@
-#' @title Estimates the time a tag is active (tag activation to first detection time)
+#' @title Estimates the length of time a tag is active (tag activation to first detection time)
 #'
-#' @description This function uses the time a tag has been active to estimate the probability
-#' it would fail when detected. The average P(failure) is estimated at
-#' each site. The estimated survival is divided by the mean P(failure) at that
-#' site to adjust for the predicted tag failure in the study (Townsend et al. 2006).
+#' @description This function uses the length of time a tag has been active to
+#'   estimate the probability it would fail when detected. The average P(failure)
+#'   is estimated at each site. The estimated survival is divided by the mean
+#'   P(failure) at that site to adjust for the predicted tag failure in the
+#'   study (Townsend et al. 2006).
 #'
 #' @param activetime.matrix Matrix of time elapsed after tag activation to first detection at site. One column per site
 #' @param site.names Vector of site designations

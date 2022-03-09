@@ -2,12 +2,12 @@
 % Please edit documentation in R/AdjSurv.fn.R
 \name{AdjSurv.fn}
 \alias{AdjSurv.fn}
-\title{Active Tag-Life-Adjusted Survival Modeling Fitting}
+\title{Active Tag Life Adjusted Survival Model Fitting}
 \usage{
 AdjSurv.fn(
-  taglife.file = NULL,
   taghist.file,
   taghist.format = "atlas",
+  taglife.file = NULL,
   taglife.model = NULL,
   num.release = 1,
   num.bootstrap = 250,
@@ -17,8 +17,6 @@ AdjSurv.fn(
 )
 }
 \arguments{
-\item{taglife.file}{Optional. Name of .csv file with taglife times in first column. Other columns ignored. Header expected}
-
 \item{taghist.file}{Required. Dataframe or a filename of .csv file with detection histories}
 
 \item{taghist.format}{Required. Format of tag detection histories
@@ -27,6 +25,8 @@ AdjSurv.fn(
 \item{"flat"}{format has one line per tag: tag.code, activation date, release date, and
 one column per detection site filled with first detection times at that site}
 }}
+
+\item{taglife.file}{Optional. Name of .csv file with taglife times in first column. Other columns ignored. Header expected}
 
 \item{taglife.model}{fc_obj. Failure time model object. (default = NULL).  If no fc_obj is provided, function will try models available in failCompare and select best fit}
 
@@ -41,13 +41,13 @@ one column per detection site filled with first detection times at that site}
 \item{plot.taglife}{(T|F) (default = T) Plot the estimated tag-life curve}
 }
 \value{
-Returns a list "Out" with (if provided):
+Returns a list "out" with (if provided):
 \describe{
 \item{taghist}{tagfile filename}
 \item{unadjusted.cjs}{table of unadjusted survival estimates}
 \item{tagfile}{tag life filename}
 \item{taglife.model}{taglife model name}
-\item{mean.tag.pLIve}{expect proportion tags active to each site}
+\item{mean.tag.pLive}{expect proportion tags active to each site}
 \item{adjust.cjs}{adjusted survival estimates}
 }
 }

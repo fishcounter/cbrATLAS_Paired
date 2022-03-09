@@ -2,7 +2,7 @@
 % Please edit documentation in R/dayhr.fn.R
 \name{dayhr.fn}
 \alias{dayhr.fn}
-\title{Standardizes date-times input}
+\title{Standardizes date-time input}
 \usage{
 dayhr.fn(x, secs = T, AMPM = F)
 }

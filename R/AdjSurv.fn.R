@@ -1,5 +1,5 @@
 
-#' @title Active Tag-Life-Adjusted Survival Modeling Fitting
+#' @title Active Tag Life Adjusted Survival Model Fitting
 #'
 #' @description This function analyzes release-recapture data from a study that uses active-tag technology.
 #' It estimates survival and detection probabilities and, if provided with tag-life data, the average probability
@@ -7,7 +7,6 @@
 #' potential tag-failure that may otherwise be interpreted as mortality. Methods are documented in
 #' \href{http://www.cbr.washington.edu/sites/default/files/manuals/ATLAS_1_4_Manual_0.pdf}{Program ATLAS 1.4:Active Tag Life Adjusted Survival}.
 #'
-#' @param taglife.file Optional. Name of .csv file with taglife times in first column. Other columns ignored. Header expected
 #' @param taghist.file  Required. Dataframe or a filename of .csv file with detection histories
 #' @param taghist.format Required. Format of tag detection histories
 #' \describe{
@@ -15,6 +14,7 @@
 #'   \item{"flat"}{format has one line per tag: tag.code, activation date, release date, and
 #' 	          one column per detection site filled with first detection times at that site}
 #' }
+#' @param taglife.file Optional. Name of .csv file with taglife times in first column. Other columns ignored. Header expected
 #' @param taglife.model fc_obj. Failure time model object. (default = NULL).  If no fc_obj is provided, function will try models available in failCompare and select best fit
 #' @param num.release (default = 1) If more than one release group, first column will be added to flat format file to denote group name (not implemented in this version)
 #' @param num.bootstrap (default = 1000) Number of resample iterations to estimate additional variance on survival estimates
@@ -25,13 +25,13 @@
 #' @importFrom failCompare fc_fit fc_rank fc_select
 #' @importFrom utils installed.packages packageVersion
 #'
-#' @return Returns a list "Out" with (if provided):
+#' @return Returns a list "out" with (if provided):
 #' \describe{
 #'   \item{taghist}{tagfile filename}
 #'   \item{unadjusted.cjs}{table of unadjusted survival estimates}
 #'   \item{tagfile}{tag life filename}
 #'   \item{taglife.model}{taglife model name}
-#'   \item{mean.tag.pLIve}{expect proportion tags active to each site}
+#'   \item{mean.tag.pLive}{expect proportion tags active to each site}
 #'   \item{adjust.cjs}{adjusted survival estimates}
 #'   }
 #'
@@ -41,7 +41,7 @@
 #'
 #' @export
 #'
-AdjSurv.fn=function (taglife.file=NULL, taghist.file,taghist.format="atlas", taglife.model=NULL, num.release=1,
+AdjSurv.fn=function (taghist.file, taghist.format="atlas",taglife.file=NULL, taglife.model=NULL, num.release=1,
                      num.bootstrap = 250, adjust.cjs = T, rounding = 4, plot.taglife = T) {
   if(is.data.frame(taghist.file)){data.file=taghist.file}else{
     data.file = data.frame(utils::read.csv(taghist.file, header = F, colClasses = c("character")))}

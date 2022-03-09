@@ -2,7 +2,7 @@
 % Please edit documentation in R/cjs.taglife.corr.R
 \name{cjs.taglife.corr}
 \alias{cjs.taglife.corr}
-\title{Estimates the time a tag is active (tag activation to first detection time)}
+\title{Estimates the length of time a tag is active (tag activation to first detection time)}
 \usage{
 cjs.taglife.corr(
   activetime.matrix,
@@ -36,8 +36,9 @@ returns a list with:
 }
 }
 \description{
-This function uses the time a tag has been active to estimate the probability
-it would fail when detected. The average P(failure) is estimated at
-each site. The estimated survival is divided by the mean P(failure) at that
-site to adjust for the predicted tag failure in the study (Townsend et al. 2006).
+This function uses the length of time a tag has been active to
+estimate the probability it would fail when detected. The average P(failure)
+is estimated at each site. The estimated survival is divided by the mean
+P(failure) at that site to adjust for the predicted tag failure in the
+study (Townsend et al. 2006).
 }
