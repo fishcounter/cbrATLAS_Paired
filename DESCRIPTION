@@ -37,4 +37,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-Additional_repositories: https://github.com/Columbia-Basin-Research-West/failCompare
+Remotes: Columbia-Basin-Research-West/failCompare
