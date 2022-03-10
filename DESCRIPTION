@@ -25,7 +25,8 @@ Description: cbrATLAS is based on a stand-alone program provided by Columbia
     See Townsend et al., (2006) <doi:10.1198/108571106X111323> 
 	and Skalski et al., (1998) <doi:10.1139/cjfas-55-6-1484>.
 License: GPL-3
-Imports: failCompare
+Imports: failCompare,
+         devtools
 Depends: R (>= 4.1.0)
 Encoding: UTF-8
 LazyData: true
