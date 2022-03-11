@@ -43,7 +43,7 @@ tmp[-c(1:2)] # additional analysis performed
 
 ```
 
-In addition to the unadjusted Cormack-Jolly-Seber estimates, the additional output includes the model fit results printed to the screen, the selected model for tag survival, the average probability and associated standard error that a tag was active upon arrival at each detection site in the study, and the adjusted CJS estimates based on those probabilities added to the output list.
+In addition to the unadjusted Cormack-Jolly-Seber estimates, the additional output includes the model fit results printed to the screen, the selected model for tag survival, the average probability and associated standard error that a tag was active upon arrival at each detection site in the study, and the adjusted CJS estimates based on those probabilities.
 
 If a particular tag-life model is desired, an fc_obj object must be created first using the failCompare package. This object is then provided to AdjSurv.fn and applied to the given detection history.
 

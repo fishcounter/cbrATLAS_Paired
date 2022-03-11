@@ -5,7 +5,9 @@
 \alias{single.rel}
 \title{Single Release ATLAS Practice File.}
 \format{
-This data is a release above McNary Dam in 2014.  A data frame with 8 columns and 9996 rows in the ATLAS file format:
+These data are from a study of acoustic-tagged salmon using a release
+above McNary Dam in 2014.  A data frame with 8 columns and 9996 rows in the
+ATLAS file format:
 \describe{
 \item{V1}{Release group (ie. R1)}
 \item{V2}{tag lot number (ie. 1,2,...)}

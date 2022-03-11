@@ -4,7 +4,7 @@
 #' @description CJS.fn summarizes the individual detection histories and
 #' estimates seeds for Cormack-Jolly-Seber (CJS) likelhood function. It is based
 #' on Skalski et al. (1998). This likelihood is also used to adjust survival for
-#' estimated tag life as described in Townsend et al. (2006).  If not tag life
+#' estimated tag life as described in Townsend et al. (2006).  If no tag-life
 #' data provided, only the unadjusted CJS survival will be returned.
 #'
 #' @param detect.in Detection history in wide ATLAS format without rel.group or
