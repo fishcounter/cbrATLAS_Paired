@@ -27,8 +27,7 @@ Description: cbrATLAS is based on a stand-alone program provided by Columbia
 License: GPL-3
 Imports: 
     failCompare,
-    devtools,
-    remotes
+    devtools
 Depends: R (>= 4.1.0)
 Encoding: UTF-8
 LazyData: true
@@ -38,4 +37,3 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-Remotes: Columbia-Basin-Research-West/failCompare
