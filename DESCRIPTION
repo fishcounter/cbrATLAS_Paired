@@ -38,4 +38,3 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-Remotes: Columbia-Basin-Research-West/failCompare
