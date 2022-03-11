@@ -8,8 +8,8 @@ init:
         Import-Module '..\appveyor-tool.ps1'
 
 install:
+  cmd: Start-FileDownload 'http://www.cbr.washington.edu/analysis/apps/failcompare/'
   ps: Bootstrap
-      Start-FileDownload 'http://www.cbr.washington.edu/analysis/apps/failcompare/'
 
 cache:
   - C:\RLibrary
