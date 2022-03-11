@@ -25,6 +25,7 @@
 #' @importFrom failCompare fc_fit fc_rank fc_select
 #' @importFrom utils installed.packages packageVersion
 #' @importFrom devtools install_github
+#' @importFrom remotes install_remote
 #'
 #' @return Returns a list "out" with (if provided):
 #' \describe{
@@ -78,7 +79,7 @@ AdjSurv.fn=function (taghist.file, taghist.format="atlas",taglife.file=NULL, tag
 		  fc.up2date=!(packageVersion("failCompare")<"1.0.0") #check if fc pkg up to date
 		if((!fc.up2date)|(!fc.loaded)){print("Please download the latest version of
 		  the failCompare pkg at http://www.cbr.washington.edu/analysis/apps/failcompare/")
-		  remotes::install_github("Columbia-Basin-Research-West/failCompare")}
+		  remotes::install_remote("Columbia-Basin-Research-West/failCompare")}
      ################################################### Estimate tag-life curve
 		if(is.null(taglife.model)){
 	    mod_ls=failCompare::fc_fit(time=taglife.file$tag_life_days,model=c('weibull','weibull3','gompertz','gamma','lognormal','llogis','gengamma'))
