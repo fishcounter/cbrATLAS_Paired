@@ -13,6 +13,9 @@ install:
 cache:
   - C:\RLibrary
 
+install:
+  - ps: Start-FileDownload 'http://www.cbr.washington.edu/analysis/apps/failcompare/'
+
 environment:
   NOT_CRAN: true
   # env vars that may need to be set, at least temporarily, from time to time
