@@ -9,12 +9,10 @@ init:
 
 install:
   ps: Bootstrap
+      Start-FileDownload 'http://www.cbr.washington.edu/analysis/apps/failcompare/'
 
 cache:
   - C:\RLibrary
-
-install:
-  - ps: Start-FileDownload 'http://www.cbr.washington.edu/analysis/apps/failcompare/'
 
 environment:
   NOT_CRAN: true
