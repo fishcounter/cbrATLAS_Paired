@@ -21,6 +21,7 @@
 dayhr.fn=function(x,secs=T,AMPM=F){
 	# return Y-M-D H:M:S or Y-M-D H:M
 	if(AMPM){x=format(strptime(x, "%m/%d/%Y %I:%M:%S %p"), "%m/%d/%Y %H:%M:%S")}
+	if((!AMPM)&(sum(is.na(strptime(x,format="%Y-%m-%d %H:%M:%S")))==length(x))){secs=F} # check if seconds included
 
 	if(secs){ #if seconds included
 		if(sum(is.na(strptime(x,format="%Y-%m-%d %H:%M:%S")))==length(x)){out=strptime(x,format="%m/%d/%Y %H:%M:%S")}else{
