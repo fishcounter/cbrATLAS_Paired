@@ -1,28 +1,26 @@
 #' @title  Summarizes detection histories and provides Cormack-Jolly-Seber
-#' estimates with or without adjustment of potential tag-failure
+#' 	estimates with or without adjustment of potential tag-failure
 #'
 #' @description CJS.fn summarizes the individual detection histories and
-#' estimates seeds for Cormack-Jolly-Seber (CJS) likelhood function. It is based
-#' on Skalski et al. (1998). This likelihood is also used to adjust survival for
-#' estimated tag life as described in Townsend et al. (2006).  If no tag-life
-#' data provided, only the unadjusted CJS survival will be returned.
+#' 	estimates seeds for Cormack-Jolly-Seber (CJS) likelhood function. It is based
+#' 	on Skalski et al. (1998). This likelihood is also used to adjust survival for
+#' 	estimated tag life as described in Townsend et al. (2006).  If no tag-life
+#' 	data provided, only the unadjusted CJS survival will be returned.
 #'
-#' @param detect.in Detection history in wide ATLAS format without rel.group or
-#' bin columns
-#' @param L.in L.in: Vector of mean probabilities tag is working given detection
-#' at each site. If NULL, function will estimate the CJS parameters without tag
-#' failure
-#' @param seeds.in Optional starting estimates for CJS model parameters Si, pi,
-#' li where i is 1:(total number of sites-1)
+#' @param detect.in Detection history in wide ATLAS format without rel.group or bin columns
+#' @param L.in Vector of mean probabilities tag is working, given detection at each
+#'  site. If NULL, function will estimate the CJS parameters without tag failure
+#' @param seeds.in Optional starting estimates for CJS model parameters Si, pi,li 
+#' 	where i is 1:(total number of sites-1)
 #' @param se.out (T|F) Should standard error of cjs parameters be estimated.
-#' Uses variance matrix based on Hessian from MLE of cjs likelihood
-#' @param d proportion of detected tags censored at a location
+#' 	Uses variance matrix based on Hessian from MLE of cjs likelihood
+#' @param d Proportion of detected tags censored at a location
 #'
-#' @return Returns a two-column matrix with CJS estimates and standard errors
-#' (if estimated)
+#' @return Returns a two-column matrix with CJS estimates and standard errors (if estimated)
+#' 
 #' @export
 #'
-cjs.fn=function(detect.in,L.in=NULL,seeds.in=NULL,se.out=F,d=NULL){
+cjs.fn=function(detect.in,L.in=NULL,seeds.in=NULL,se.out=F,d=NULL, parscale.in=1e-04, reltol.in=1e-30, maxit.in=2e+06){
   num.period=dim(detect.in)[2]
   if(is.null(L.in)){L.in=rep(1,num.period)} # if no tag failure, L = 100% for all sites
 
@@ -51,7 +49,7 @@ cjs.fn=function(detect.in,L.in=NULL,seeds.in=NULL,se.out=F,d=NULL){
         seeds.in[i] = (sum(detect.in[, i] == 1)/seeds.in[i + num.period - 1])/(sum(detect.in[, i - 1] == 1)/seeds.in[i + num.period - 2])
       }
     }
-    # print("p(censored)")
+    # "p(censored)")
     d=rep(0,num.period-1)
     for(i in (1:(num.period-1))){
       d[i]= sum(detect.in[,i]==2)/sum(detect.in[,i]>0)
@@ -64,12 +62,10 @@ cjs.fn=function(detect.in,L.in=NULL,seeds.in=NULL,se.out=F,d=NULL){
   # print("seeds done ")
 
   ## maximum likelihood estimate of CJS parameters
-  parscale.in=1e-04
-  reltol.in=1e-30
-  maxit.in=2e+06
 
   cjs.out = stats::optim(seeds.in, cjs.lik, counts.in = counts.in, num.period = num.period, use.hist=obs.hist,L=L.in,d.in=d,
-                  method = "BFGS", hessian = F, control = list(parscale = rep(parscale.in, num.period * 2 - 1), reltol = reltol.in,maxit=maxit.in,ndeps=rep(parscale.in, num.period * 2 - 1)))
+                  method = "BFGS", hessian = F, control = list(parscale = rep(parscale.in, num.period * 2 - 1), reltol = reltol.in, maxit=maxit.in,
+				  ndeps=rep(parscale.in, num.period * 2 - 1)))
   cjs.out$par=correct.fn(cjs.out$par)
 
 
@@ -77,7 +73,8 @@ cjs.fn=function(detect.in,L.in=NULL,seeds.in=NULL,se.out=F,d=NULL){
   if(se.out){
     # rerun to get hessian
     cjs.out = stats::optim(cjs.out$par, cjs.lik, counts.in = counts.in, num.period = num.period, use.hist=obs.hist,L=L.in,d.in=d,
-                    method = "BFGS", hessian = T, control = list(parscale = rep(parscale.in, num.period * 2 - 1), reltol = reltol.in,maxit=maxit.in,ndeps=rep(parscale.in, num.period * 2 - 1)))
+                    method = "BFGS", hessian = T, control = list(parscale = rep(parscale.in, num.period * 2 - 1), reltol = reltol.in,
+					maxit=maxit.in,ndeps=rep(parscale.in, num.period * 2 - 1)))
     cjs.out$par=correct.fn(cjs.out$par)
 
     # calculate standard errors on CJS estimates, based on Hessian
@@ -95,7 +92,7 @@ cjs.fn=function(detect.in,L.in=NULL,seeds.in=NULL,se.out=F,d=NULL){
     cjs.param = matrix(c(cjs.out$par), ncol = 1)
     row.names(cjs.param)=names(seeds.in)
   }
-
-  return(list(cjs.param=cjs.param, d=d))
-}
-
+	if(is.null(d)){return(cjs.param)}else{
+		return(list(cjs.param=cjs.param, d=d))
+		}
+}		
