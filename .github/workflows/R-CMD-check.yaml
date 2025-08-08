@@ -17,12 +17,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: r-lib/actions/setup-r@v4
+      - uses: r-lib/actions/setup-r@v3
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v4
+      - uses: r-lib/actions/setup-r-dependencies@v3
         with:
           extra-packages: rcmdcheck
 
-      - uses: r-lib/actions/check-r-package@v4
+      - uses: r-lib/actions/check-r-package@v3
