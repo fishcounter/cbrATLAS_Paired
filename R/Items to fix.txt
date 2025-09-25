@@ -1,0 +1,78 @@
+To do
+-------
+### make sure output names match ATLAS
+### some items missing in final output
+### logisize parameters
+### add optimizer options to input paramter input (on the end of the list)
+### add plot showing taglive vs detetion times
+
+#  currently, program urps at line 135 of cjs.paired.fn.  after setting all parameters equal after initial release, rest of var-covar matrix is == 0.
+fix paired cjs.lik 42-44 make sure lines work
+
+###################### from RAB
+
+boot.L function
+# here is my code for boot.L using tryCatch.
+ 
+boot.L_rab<-function(at.time.matrix,model.in,num.boots=1000){
+  num.period=dim(at.time.matrix)[2]
+  L.matrix=matrix(0,nrow=num.boots,ncol=num.period)
+  L2.matrix=matrix(0,nrow=num.boots,ncol=num.period)
+  i<-1
+
+  # estimate s^2[Ti|d] based on resampled taglife study and observed active time
+
+  while(i <= num.boots) {
+    #cat("i=",i," ")
+    t.in=sort(sample(model.in$times[,1],replace=T))
+    #x=failCompare::fc_fit(time=t.in,model=model.in$mod_choice)
+    ii<-NULL
+    x<-tryCatch(failCompare::fc_fit(time=t.in, model=model.in$mod_choice),
+                 error = function(e) {ii <<- i-1},
+                 warning = function(w) {ii <<- i-1}
+                 )
+    if(!is.null(ii)) i<-(i-1) else {
+    for (j in 1:dim(at.time.matrix)[2]){
+      at.temp=as.numeric(at.time.matrix[!is.na(at.time.matrix[, j]),j])
+      L.matrix[i,j]=mean(failCompare::fc_pred(mod_obj=x,times=at.temp))  # the original code used mod_obj=model.in here
+    }
+    }
+    i<-i+1
+  }
+  rm(i,ii,t.in,x,at.temp)
+  i<-1
+  # estimate s^2[Ti] based on resampled taglife study and resampled observed active time
+  while(i <= num.boots) {
+    t.in=sort(sample(model.in$times[,1],replace=T))
+    #x=failCompare::fc_fit(time=t.in,model=model.in$mod_choice)
+    ii<-NULL
+    x<-tryCatch(failCompare::fc_fit(time = t.in,
+                                    model = model.in$mod_choice),
+                error = function(e) {ii <<- i-1},
+                warning = function(w) {ii <<- i-1}
+                )
+
+    if(!is.null(ii)) i<-(i-1) else {
+    for (j in 1:dim(at.time.matrix)[2]){
+      at.sample=sample(1:dim(at.time.matrix)[1],replace=T)
+      at.tmp=at.time.matrix[at.sample,]
+      at.temp=as.numeric(at.tmp[!is.na(at.tmp[, j]),j])
+      L2.matrix[i,j]=mean(failCompare::fc_pred(mod_obj=x,times=at.temp)) # the original code used mod_obj=model.in here
+    }
+    }
+    i<-i+1
+  }
+  return(list(L.matrix=L.matrix,L2.matrix=L2.matrix))
+}
+ 
+# I also edited the code to use mod_obj=x in the definition of L.matrix and L2.matrix. The original code had used mod_obj=model.in there.
+
+# AdjSurv.Fn
+#  looking at the second data set (with multiple downstream reaches). For the definition of common.start, it says to select 1 to use common parameters starting at the first detection site common to both releases. I think that would be the p1 parameter, but when I set common.start = 3 (so that p2 should be the first common parameter), it is making the seeds for the p1 parameters common (p11=p12) but not any of the survival parameters (i.e., S31 != S32). It looks like the common.start setting is not implemented correctly.
+ 
+ 
+# For the second data set ("chinR1_R3_JDay2011.csv"), the reason that it can't fit the adjusted paired CJS model is that d.lik is a vector of 0 so that log(d.lik[k]) is -Inf. See line 89 in "paired.cjs.lik.R".
+# I think the problem is that d is defined only if seeds.in is NULL when passed to cjs.paired.fn, so that d is defined to have a some non-zero value for computing the unadjusted paired CJS estimates, but when we go to compute the adjusted estimates, seeds.in is not NULL so d is not defined (i.e., left as NULL), and then is automatically changed to a vector of 0's. So define d (in cjs.paired.fn) outside of the "if" statement action where seeds.in is defined.
+ 
+That is, move lines 49-55 below the } bracket in line 57. # done
+ 

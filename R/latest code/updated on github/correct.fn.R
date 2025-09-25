@@ -13,9 +13,9 @@
 #' @export
 #'
 correct.fn=function(x){
-  # keep probabilities between 0 and 1
+  # keep probabilities between 0 and 1 (this version, only positive ests)
   x[x<0.0000001]=1e-10
-  x[x>0.9999999]=1-1e-10
+  x[x>0.9999999]=1-(1e-10)
   return(x)
 }
 

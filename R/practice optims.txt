@@ -1,0 +1,7 @@
+paired.cjs.lik(params.in=unlist(seeds.in),counts.in,num.period,use.hist=obs.hist,L.in=L.in,d.in=d,common.start=common.start.in)
+
+optim(par=unlist(seeds.in), fn=paired.cjs.lik, counts.in = counts.in, num.period=num.period, use.hist=obs.hist,L=L.in,d.in=d
+
+detects.in=detects,L.in=list(mean.tag.p[[1]]$L,mean.tag.p[[2]]$L),
+			seeds.in=unadj.cjs.paired.params$paired.cjs.param[,1],se.out=T,
+			bootstrap=0,common.start.in=common.start

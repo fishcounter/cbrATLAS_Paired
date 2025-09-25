@@ -1,0 +1,76 @@
+[1] "Release Group 1, ID Name: R1"
+[[1]]
+NULL
+
+$release
+$release[[1]]
+[1] "R1"
+
+$release$taghist
+                                                file.out
+1 data/Single_Release_ATLAS_Practice_File_no_censors.csv
+
+$release$capture.history
+$release$capture.history[[1]]
+     [,1]
+0000   76
+0100    3
+0111   18
+1000   99
+1100  250
+1101    5
+1110   83
+1111 1965
+
+
+$release$unadjusted.cjs
+$release$unadjusted.cjs$cjs.param
+    Estimate         s.e.
+S1 0.9699491 0.0034374165
+S2 0.9587843 0.0040560613
+S3 0.8912260 0.0064617470
+p1 0.9909639 0.0019628001
+p2 1.0000000 0.0003107385
+p3 0.9974849 0.0011224813
+l  0.9598258 0.0043201993
+
+$release$unadjusted.cjs$d
+d1 d2 d3 
+ 0  0  0 
+
+
+$release$tagfile
+[1] "data/Taglife_ATLAS_Practice_File.csv"
+
+$release$taglife.model
+weibull3 failure model object 
+
+Parameter estimates:
+       params       std
+shape  2.4209 0.2754862
+thrsh 20.8171 0.1760721
+scale  2.6949 0.2303974
+
+$release$mean.tag.pLive
+$release$mean.tag.pLive$L
+   Site.1    Site.2    Site.3    Site.4 
+1.0000000 1.0000000 0.9999985 0.9999917 
+
+$release$mean.tag.pLive$L.se
+      Site.1       Site.2       Site.3       Site.4 
+0.000000e+00 0.000000e+00 7.773287e-08 1.589840e-06 
+
+
+$release$adjusted.cjs
+$release$adjusted.cjs$cjs.param
+    Estimate         s.e.
+S1 0.9699491 0.0034374165
+S2 0.9587843 0.0040560613
+S3 0.8912274 0.0064617569
+p1 0.9909639 0.0019628000
+p2 1.0000000 0.0003107385
+p3 0.9974849 0.0011224812
+l  0.9598338 0.0043202291
+
+
+

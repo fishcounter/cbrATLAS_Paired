@@ -53,7 +53,7 @@ AdjSurv.fn=function (taghist.file, taghist.format="atlas",taglife.file=NULL, tag
     tag.life = sort(tag.life[, 1])
   }
 
-    # reformat detetion file if in Program ATLAS format from ATLAS to flat
+    # reformat detetion file if in Program ATLAS format from ATLAS to flat   
   if(taghist.format == "atlas"){data.file=atlas2flat.fn(data.file)}
 
   rel.groups=unique(data.file[,1])
@@ -73,8 +73,9 @@ AdjSurv.fn=function (taghist.file, taghist.format="atlas",taglife.file=NULL, tag
 
     # Estimate unadjusted CJS
     unadj.cjs.params=cjs.fn(detect.in=detects,se.out=T)
-
+print("main 1")
     if(!is.null(taglife.file)){
+print("fit tag life 1")
 		  fc.loaded=("failCompare" %in% installed.packages())
 		  fc.up2date=!(packageVersion("failCompare")<"1.0.0") #check if fc pkg up to date
 		if((!fc.up2date)|(!fc.loaded)){print("Please download the latest version of
@@ -83,20 +84,28 @@ AdjSurv.fn=function (taghist.file, taghist.format="atlas",taglife.file=NULL, tag
 		  devtools::install_github("Columbia-Basin-Research-West/failCompare")}
      ################################################### Estimate tag-life curve
 		if(is.null(taglife.model)){
-	    mod_ls=failCompare::fc_fit(time=taglife.file$tag_life_days,model=c('weibull','weibull3','gompertz','gamma','lognormal','llogis','gengamma'))
+print("fit tag life 2")
+print(taglife.file)
+#	    mod_ls=failCompare::fc_fit(time=taglife.file$tag_life_days,model=c("all"))
+	    mod_ls=failCompare::fc_fit(time=tag.life,model=c("all"))
+		print(mod_ls);print("fc_fit")
 			mod_ls_ranked=failCompare::fc_rank(mod_ls)
+print("fit tag life 3")
 
 			# currently, select best-fitting model automatically
 			taglife.fit=failCompare::fc_select(mod_ls_ranked,model = as.character(mod_ls_ranked$"GOF_tab"[1,1]))
+print("fit tag life 4")
 			}else{taglife.fit=taglife.model}
+print("main 2")
 
 		if(plot.taglife){plot(taglife.fit)}
 
       ########### Estimate mean travel time to each site, use to calculate mean failure at each site
-      tt.rel2site=mean_tt2site.fn(data.in,num.period,site.names)
+      tt.rel2site=mean.tt2site.fn(data.in,num.period,site.names)
 
       mean.tag.p=cjs.taglife.corr(activetime.matrix=tt.rel2site$activetime.matrix,site.names=site.names,
                                 num.period=num.period,taglife.fit=taglife.fit,num.boots=0)
+print("main 3")
 
       ### once tag-life model has been selected, rerun to get bootstapped se's on P(Li)
       mean.tag.p=cjs.taglife.corr(activetime.matrix=tt.rel2site$activetime.matrix,site.names=site.names,
@@ -109,12 +118,14 @@ AdjSurv.fn=function (taghist.file, taghist.format="atlas",taglife.file=NULL, tag
         adj.cjs.params$cjs.param[c(1:(num.period-1),num.period*2-1),2]=mean.tag.p$adj.Si.se
       }
     }
+print("main 4")
 
 
     ### create output list from analysis
     if(is.data.frame(taghist.file)){file.out=deparse(substitute(taghist.file))}else{
       file.out=taghist.file
       }
+print("main 5")
    out=list(taghist=file.out, unadjusted.cjs=unadj.cjs.params)
     if(!is.null(taglife.file)){
       if(is.data.frame(taglife.file)){out$tagfile=deparse(substitute(taglife.file))}else{

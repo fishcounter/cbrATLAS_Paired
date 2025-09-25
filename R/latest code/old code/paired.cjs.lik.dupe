@@ -1,0 +1,105 @@
+#' @title A likelihood function for multiple unadjusted- or adjusted-for-taglife Cormack-Jolly-Seber (CJS) estimates 
+#'	that have common parameters (S, p, l)
+#'
+#' @description Based on the likelihood function for unadjusted- or adjusted-for-taglife
+#'  Cormack-Jolly-Seber (CJS) estimates and Skalski et al. (1998) 
+#'  Adjustment to survival for estimated tag life as described in Townsend et al.
+#'  (2006).  User input indicates which parameters should be set to the same value. This
+#'  function is set above individual CJS likelihood calls
+#'
+#' @param params List of likelihood MLE estimators (S,p,l) in a single vector (1 each for upper, lower release)
+#' @param counts.in List of Vectors of summed detections by history (names are history)
+#' @param num.period Number of detection periods in history
+#' @param use.hist List of Matrices of unique detection histories
+#' @param L.in List of probability that a tag is working at a detection site at a given time. Set to 1 if active tags not indicated. 
+#'        p(tag working) is cumulative to each site, not a multiplicate from site to site
+#' @param d.in List of probability a tag is censored given that it's detected
+#' @param common.start numeric indicating point survival/detection p's are equated
+#'
+#' @return This function returns a negative log-likelihood
+#' @export
+#'
+paired.cjs.lik=function(params.in,counts.in,num.period,use.hist,L.in=NULL,d.in=NULL,common.start=NULL){
+  # 
+print("Entered paired.cjs.lik!")
+  params=list(params.in[1:(length(params.in)/2)],params.in[((length(params.in)/2)+1):length(params.in)])
+  if(is.null(L.in[[1]])){L.tmp=list(rep(1,num.period),rep(1,num.period))} # both upper & lower must either be 0 or both tag corrected 
+#  print(round(params.in,10));print("start paired.cjs.lik")
+  if(!(num.period>1)){cat("Number of periods must be greater than 1")}
+  stopifnot(num.period>1)
+
+  params=lapply(params,correct.fn)
+ # set common parameters in lower release to equal upper release params
+  if(is.null(common.start)){common.start=0} 
+  if(common.start>0){
+ 	common.param=c(seq(1,(length(params[[1]])-1),2),seq(2,(length(params[[1]])-1),2),length(params[[1]]))
+	params[[2]][!(common.param<(common.start+1))]=params[[1]][!(common.param<(common.start+1))]
+  }  
+ 
+ for(g in 1:2){ #1=upper release params 2=lower
+	# split mle vector into separate types
+	s=params[[g]][1:(num.period-1)]
+	p=params[[g]][(num.period):((num.period-1)*2)]
+	l=params[[g]][1+(num.period-1)*2]
+	if(!is.null(L.in)){L.tmp=L.in[[g]]}
+	if(is.null(d.in[[g]])){d.lik=rep(0,num.period-1)}else{d.lik=d.in[[g]]}
+	
+	# combinatoric
+	if(g==1){out=lgamma(sum(counts.in[[g]])+1)-sum(lgamma(counts.in[[g]]+1))}else{
+			 out=out+lgamma(sum(counts.in[[g]])+1)-sum(lgamma(counts.in[[g]]+1))}
+
+	# fish detected in last period
+	for(i in c(1:dim(use.hist[[g]])[1])[use.hist[[g]][,dim(use.hist[[g]])[2]]==1]){
+		out.hist=log(l)+log(L.tmp[num.period])
+		for(j in 1:(num.period-1)){
+			if(use.hist[[g]][i,j]==1){out.hist=out.hist+log(s[j])+log(p[j])+log(1-d.lik[j])}
+			if(use.hist[[g]][i,j]==0){out.hist=out.hist+log(s[j])+log(1-p[j])}
+			}
+
+		out=out+counts.in[[g]][i]*out.hist
+
+
+		}
+
+	# fish not detected last period and no censures
+	in.hist=c(1:dim(use.hist[[g]])[1])[(use.hist[[g]][,dim(use.hist[[g]])[2]]==0)&(apply(use.hist[[g]],1,function(x) {!(2 %in% x)}))]
+	for(i in in.hist){
+		last.detect=c(1:num.period)[use.hist[[g]][i,]==1]
+		if(length(last.detect)==0){last.detect=0}else{last.detect=max(last.detect)}
+		out.hist=1-l*L.tmp[num.period]
+		if(!((num.period-1)<(last.detect+1))){
+			for (k in (num.period-1):(last.detect+1)){out.hist=(1-L.tmp[k])+L.tmp[k]*(1-s[k]+s[k]*(1-p[k])*out.hist)}
+			}
+print(c("log(out.hist) 1",out.hist))
+		out.hist=log(out.hist)
+		if(last.detect>0){
+			out.hist=out.hist+log(L.tmp[last.detect]) # p(tag active at last detected site)
+			for (k in last.detect:1){
+				if(use.hist[[g]][i,k]==1){out.hist=out.hist+log(s[k])+log(p[k])+log(1-d.lik[k])}
+				if(use.hist[[g]][i,k]==0){out.hist=out.hist+log(s[k])+log(1-p[k])}
+				}
+			}
+		out=out+counts.in[[g]][i]*out.hist
+		}
+
+	# fish not detected last period and censured at some point
+	in.hist=c(1:dim(use.hist[[g]])[1])[(use.hist[[g]][,dim(use.hist[[g]])[2]]==0)&(apply(use.hist[[g]],1,function(x) {(2 %in% x)}))]
+	for(i in in.hist){
+		out.hist=1
+		last.detect=c(1:num.period)[use.hist[[g]][i,]==2]
+		out.hist=log(out.hist)
+print(c("log(out.hist) 2",out.hist))
+
+		for (k in last.detect:1){
+			if(use.hist[[g]][i,k]==2){out.hist=out.hist+log(s[k])+log(p[k])+log(d.lik[k])+log(L.tmp[k])}
+			if(use.hist[[g]][i,k]==1){out.hist=out.hist+log(s[k])+log(p[k])+log(1-d.lik[k])}
+			if(use.hist[[g]][i,k]==0){out.hist=out.hist+log(s[k])+log(1-p[k])}
+			}
+		out=out+counts.in[[g]][i]*out.hist
+#		print(out.hist)
+		}
+	}
+
+# print("leaving paired.cjs.lik!")
+  return(-out)
+}

@@ -1,0 +1,73 @@
+
+# set up
+.First=function(){
+	# files have to be loaded individually because R4.5.1 broke it
+	invisible({
+	rm(list=ls(all=TRUE))
+	utils::setWindowTitle(getwd())
+	options(contrasts = c("contr.treatment", "contr.poly"), length = 4000)
+	library(MASS)
+#	istall.packages(c("survival", "flexsurv", "vitality"))
+#	install.packages("failCompare_1.2.0.zip")
+	library("flexsurv")
+	library("vitality")
+	source("latest code/AdjSurv multiRel.fn.R")
+	source("latest code/atlas2flat.fn.R")
+	source("latest code/boot.L.R")
+	source("latest code/cjs.fn.R")
+	source("latest code/cjs.lik.R")
+	source("latest code/cjs.paired.fn.R")
+	source("latest code/cjs.taglife.corr.R")
+	source("latest code/correct.fn.R")
+	source("latest code/dayhr.fn.R")
+	source("latest code/harmonic.R")
+	source("latest code/mean_tt2site.fn.R")
+	source("latest code/paired.cjs.lik.R")
+	source("latest code/thist0.R")
+	source("latest code/vs2.fn.R")
+	})	
+}
+
+
+
+# various taglife options
+sink(file="R output.txt")
+sink(file=NULL)
+AdjSurv.fn(taglife.file="data/Taglife_ATLAS_Practice_File.csv",taghist.file="data/Single_Release_ATLAS_Practice_File_no_censors.csv",taglife.model="weibull", 
+	num.release=1,study.type="single",num.bootstrap=1000)
+
+AdjSurv.fn(taglife.file="../microtagtest for Atlas.csv",taghist.file="data/Single_Release_ATLAS_Practice_File_no_censors.csv",taglife.model=NULL, 
+	num.release=1,study.type="single",num.bootstrap=1000)
+
+AdjSurv.fn(taglife.file="data/Taglife_ATLAS_Practice_File.csv",taghist.file="data/Paired_Release_ATLAS_Practice_File.csv",taglife.model="weibull3", 
+	num.release=2,study.type="paired",num.bootstrap=1000) # not working yet--getting log(out.hist) NaNs produced
+
+
+AdjSurv.fn(taglife.file="data/Spring2010TagLife.csv",taghist.file="data/Paired_Release_ATLAS_Practice_File.csv",taglife.model="weibull3",num.release=2,study.type="paired")
+
+
+AdjSurv.fn(taglife.file="data/JDay2011_TagLifepooled.csv",taghist.file="data/chinR1_R3_JDay2011.csv",taglife.model="vitality.4p",num.release=2,study.type="paired")
+AdjSurv.fn(taglife.file="data/JDay2011_TagLifepooled.csv",taghist.file="data/chinR1_R3_JDay2011.csv",taglife.model="weibull3",num.release=2,study.type="paired")
+
+
+
+
+
+num.release=2
+taghist.data="../../ATLAS ver2/cbrATLAS0.0.2/R/data/Paired_Release_ATLAS_Practice_File.csv"
+taglife.data="../microtagtest for Atlas.csv"
+study.type="paired"
+taglife.model="weibull
+
+ 
+paired.rel="data/Paired_Release_ATLAS_Practice_File.csv"
+
+AdjSurv.fn(taglife.file="../microtagtest for Atlas.csv",taghist.file="data/Paired_Release_ATLAS_Practice_File.csv",taglife.model=NULL, num.release=2,study.type="paired")
+
+
+# not working right now
+AdjSurv.fn(taglife.file="../data/Spring2010TagLife.csv",taghist.file="../data/Spring2010ChinookPaired no censors.csv",taglife.model="vitality.ku",num.release=2,study.type="paired")
+
+
+
+model=c("weibull","weibull3", "gompertz", "gamma", "lognormal", "llogis", "gengamma","vitality.ku","vitality.4p")
